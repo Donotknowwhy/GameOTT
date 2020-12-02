@@ -19,14 +19,14 @@ public class ClientRun {
     public static void main(String[] args) {
         LoginFrm loginFrm = new LoginFrm();
         System.out.println("1");
-        RegisterFrm registerFrm = new RegisterFrm();
+//        RegisterFrm registerFrm = new RegisterFrm();
         ClientControl clientControl = new ClientControl();
         System.out.println("");
         clientControl.openConnection();
         System.out.println("2");
-//        LoginControl loginControl
-//                 = new LoginControl(loginFrm,clientControl);
-        RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
+        LoginControl loginControl
+                 = new LoginControl(loginFrm,clientControl);
+//        RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
         
     }
 }

@@ -17,6 +17,7 @@ import model.Message;
 import ui.Invite;
 import ui.LoginFrm;
 import ui.Rank;
+import ui.RegisterFrm;
 
 /**
  *
@@ -31,7 +32,7 @@ public class LoginControl {
         this.clientControl = clientControl;
         this.loginFrm = loginFrm;
         this.loginFrm.setVisible(true);
-        this.loginFrm.setAction(new ButtonListener());
+        this.loginFrm.setAction(new ButtonListener(), new ButtonRegister());
     }
     class ButtonListener implements ActionListener{
 
@@ -53,5 +54,15 @@ public class LoginControl {
                 
             }
         }       
+    }
+    class ButtonRegister implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            RegisterFrm registerFrm = new RegisterFrm();
+            registerFrm.setVisible(true);
+            RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
+        }
+        
     }
 }

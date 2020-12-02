@@ -20,8 +20,8 @@ import java.sql.SQLException;
 public class ConnectDatabase {
     private Connection conn;
     private String jdbcURL = "jdbc:mysql://localhost:3306/testdbgame";
-    private String jdbcUsername = "duong";
-    private String jdbcPassword = "duong";
+    private String jdbcUsername = "root";
+    private String jdbcPassword = "xuankien99";
     private static ConnectDatabase connectDb = null;
     
     private ConnectDatabase() {
