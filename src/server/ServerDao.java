@@ -198,7 +198,7 @@ public class ServerDao{
         return listUser;
     }
     
-    public ArrayList<User> getUers(){
+    public ArrayList<User> getUsers(){
         ArrayList<User> listUser = new ArrayList<>();
         try {
             PreparedStatement pre = conn.prepareStatement(Usage.getAllUser);

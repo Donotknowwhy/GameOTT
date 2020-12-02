@@ -108,8 +108,8 @@ public class ServerControl implements Runnable {
                 }
                 break;
             }
-            case LIST_USERS:{
-                ArrayList<User> us = serverDao.getUers();
+            case GET_SCOREBOARD:{
+                ArrayList<User> us = serverDao.getUsers();
                 if(us != null){
                     try {
                         oos.writeObject(new Message(us, Message.MesType.lIST_FULL));

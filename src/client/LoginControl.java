@@ -15,6 +15,7 @@ import java.util.Arrays;
 import model.Account;
 import model.Message;
 import ui.Invite;
+import ui.ListFrm;
 import ui.LoginFrm;
 import ui.Rank;
 import ui.RegisterFrm;
@@ -26,8 +27,7 @@ import ui.RegisterFrm;
 public class LoginControl {
     private LoginFrm loginFrm;
     private ClientControl clientControl;
-    private Invite invite;
-    private Rank rank;
+    private ListFrm listFrm;
     public LoginControl(LoginFrm loginFrm,ClientControl clientControl){
         this.clientControl = clientControl;
         this.loginFrm = loginFrm;
@@ -49,9 +49,11 @@ public class LoginControl {
                 loginFrm.showMessage("Login Fail");
             }else if(mesRecei.getMesType() == Message.MesType.LOGIN_SUCCESS){
                 loginFrm.showMessage("Login Success");
-                invite.setVisible(true);
-                rank.setVisible(true);
-                
+                Message mesReq = new Message(account, Message.MesType.GET_SCOREBOARD);
+                clientControl.sendData(mesReq);
+                listFrm = new ListFrm();
+                InviteControl inviteControl = new InviteControl(clientControl, listFrm);
+                listFrm.setVisible(true);
             }
         }       
     }

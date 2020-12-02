@@ -5,8 +5,11 @@
  */
 package ui;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.table.DefaultTableModel;
+import model.Account;
 import model.User;
 
 /**
@@ -14,8 +17,10 @@ import model.User;
  * @author BENH VIEN CONG NGHE
  */
 public class ListFrm extends javax.swing.JFrame {
+
     DefaultTableModel model;
-    
+    private ArrayList<User> users = new ArrayList<>();
+
     /**
      * Creates new form ListFrm
      */
@@ -23,9 +28,58 @@ public class ListFrm extends javax.swing.JFrame {
         initComponents();
         model = (DefaultTableModel) tableList.getModel();
     }
-    public void addRow(ArrayList<User> listUser){
-        
+
+    public void addRow(ArrayList<User> listUser) {
+
     }
+
+//        private void showUsersLowToHigh(ArrayList<User> users){
+//        DefaultTableModel dtm = (DefaultTableModel)tableList.getModel();
+//        dtm.getDataVector().removeAllElements();
+//        
+//        Collections.sort(users);        
+//        users.forEach(u -> {
+//            dtm.addRow(u.toObjects());
+//        });
+//    }
+//    
+//    private void showUserHighToLow(){
+//        DefaultTableModel dtm = (DefaultTableModel)tableList.getModel();
+//        dtm.getDataVector().removeAllElements();
+//        
+//        Collections.sort(users);   
+//        Collections.reverse(users);
+//        users.forEach(u -> {
+//            dtm.addRow(u.toObjects());
+//        });
+//    }
+    public void showUsers(ArrayList<User> users) {
+        DefaultTableModel dtm = (DefaultTableModel) tableList.getModel();
+        dtm.getDataVector().removeAllElements();
+        users.forEach(u -> {
+            dtm.addRow(u.toObjects());
+        });
+    }
+
+    private User choseData() {
+        User user = new User();
+        int indexRow = tableList.getSelectedRow();
+        if (indexRow != -1) {
+            user = users.get(indexRow);
+            int rank = user.getRank();
+            int point = user.getPoint();
+            Account acc = user.getAccount();
+            boolean status = user.isStatus();
+
+//            System.out.println(": id=" + id + ",p= "+ point + ", s= " + status);
+        }
+        return user;
+    }
+
+    public void setAction(ActionListener al) {
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,16 +162,17 @@ public class ListFrm extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_backActionPerformed
 
     private void inviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviteActionPerformed
         // TODO add your handling code here:
         new GameFrm().setVisible(true);
     }//GEN-LAST:event_inviteActionPerformed
-    public int getSelectedRow (){
+    public int getSelectedRow() {
         return tableList.getSelectedRow();
     }
+
     /**
      * @param args the command line arguments
      */
