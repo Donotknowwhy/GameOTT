@@ -8,6 +8,7 @@ package ui;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
 import model.User;
@@ -61,25 +62,26 @@ public class ListFrm extends javax.swing.JFrame {
         });
     }
 
-    private User choseData() {
+    public User choseData() {
         User user = new User();
         int indexRow = tableList.getSelectedRow();
         if (indexRow != -1) {
             user = users.get(indexRow);
             int rank = user.getRank();
-            int point = user.getPoint();
             Account acc = user.getAccount();
+            int point = user.getPoint();           
             boolean status = user.isStatus();
-
-//            System.out.println(": id=" + id + ",p= "+ point + ", s= " + status);
         }
         return user;
     }
 
     public void setAction(ActionListener al) {
-
+        btnInvite.addActionListener(al);
     }
-
+    
+     public void thongBao(String f){
+         JOptionPane.showMessageDialog(this, f);
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,7 +94,7 @@ public class ListFrm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableList = new javax.swing.JTable();
-        invite = new javax.swing.JButton();
+        btnInvite = new javax.swing.JButton();
         back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,10 +111,10 @@ public class ListFrm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableList);
 
-        invite.setText("Invite");
-        invite.addActionListener(new java.awt.event.ActionListener() {
+        btnInvite.setText("Invite");
+        btnInvite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inviteActionPerformed(evt);
+                btnInviteActionPerformed(evt);
             }
         });
 
@@ -140,7 +142,7 @@ public class ListFrm extends javax.swing.JFrame {
                 .addGap(58, 58, 58)
                 .addComponent(back)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(invite)
+                .addComponent(btnInvite)
                 .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
@@ -152,7 +154,7 @@ public class ListFrm extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(invite)
+                    .addComponent(btnInvite)
                     .addComponent(back))
                 .addGap(66, 66, 66))
         );
@@ -165,10 +167,10 @@ public class ListFrm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
 
-    private void inviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviteActionPerformed
+    private void btnInviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInviteActionPerformed
         // TODO add your handling code here:
         new GameFrm().setVisible(true);
-    }//GEN-LAST:event_inviteActionPerformed
+    }//GEN-LAST:event_btnInviteActionPerformed
     public int getSelectedRow() {
         return tableList.getSelectedRow();
     }
@@ -210,7 +212,7 @@ public class ListFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
-    private javax.swing.JButton invite;
+    private javax.swing.JButton btnInvite;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableList;

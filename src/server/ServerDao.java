@@ -50,7 +50,11 @@ public class ServerDao{
             pre.setString(2, acc.getPassword());
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
-                System.out.println("1login");
+                int id = rs.getInt("id");
+                PreparedStatement pre1 = conn.prepareStatement(Usage.updateStatus);
+                pre1.setBoolean(1, true);
+                pre1.setInt(2, id);
+                pre1.executeUpdate();
                 user.setAccount(acc);
                 user.setStatus(true);
                 return user;
@@ -85,7 +89,7 @@ public class ServerDao{
                 User user = new User(0, false);
                 pre1.setInt(1, lastRowId);
                 pre1.setInt(2, 0);
-                pre1.setBoolean(3, false);
+                pre1.setBoolean(3, true);
                 pre1.executeUpdate();
                 isSuccess = true;
                 conn.commit();
@@ -233,6 +237,11 @@ public class ServerDao{
         
     }
     
+//    public User getUser(){
+//        User u 
+//        return user;
+//    }
+//    
     class CompareUser implements Comparator<User> {
 
         @Override

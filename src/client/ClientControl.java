@@ -73,13 +73,25 @@ public class ClientControl{
         }
         return null;
     }
-    private void checkMesReceiveType(Message.MesType mesType){
-        switch(mesType){
-            case LOGIN_FAIL:{
-            }
-            case LOGIN_SUCCESS:{
+}
+class CheckMess extends Thread{
+        private Socket socketNhanInvite;
+        private String serverHost;
+        private int serverPort;
+        ObjectInputStream ois;
+        ObjectOutputStream oos;
+    @Override
+    public void run() {
+            try {
+                ois = new ObjectInputStream(socketNhanInvite.getInputStream());
                 
+                Object o = ois.readObject();
+                if(o instanceof )
+            } catch (IOException ex) {
+                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
     }
+    
 }

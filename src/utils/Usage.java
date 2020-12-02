@@ -22,4 +22,7 @@ public interface Usage {
     public String insertChoiceResult = "update tblChoice set result = ? where id = ?";
     public String getAllUser = "select u._point,u._status,a._username from tbluser as u, tblaccount as a "
             + "where u._accid = a.id";
+    
+    //update status
+    public String updateStatus = "update tbluser set _status = ? where _accid = ?";
 }

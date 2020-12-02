@@ -14,6 +14,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
@@ -32,7 +34,7 @@ public class ServerControl implements Runnable {
     ObjectInputStream ois;
     ObjectOutputStream oos;
     ServerDao serverDao;
-
+    private Map<User,Socket> mapSocket = new HashMap<>();
     public ServerControl(Socket socket) {
         this.serverDao = new ServerDao();
         this.clientSocket = socket;
@@ -85,6 +87,7 @@ public class ServerControl implements Runnable {
                 } else {
                     try {
                         oos.writeObject(new Message(user, Message.MesType.LOGIN_SUCCESS));
+                        mapSocket.put(user, clientSocket);
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -126,9 +129,24 @@ public class ServerControl implements Runnable {
                 break;
             }
             
-            case INVITE_USER:{              
-                
-                
+            case INVITE_USER:{
+                ArrayList<User> users2 = (ArrayList<User>) mesReceive.getObject();
+                User userMoi = users2.get(0);
+                User userNhan = users2.get(1);
+                ArrayList<User> users = new ArrayList<User>(mapSocket.keySet());
+                for(int i= 0;i<users.size();i++){
+                    if(userNhan.equalsUser(users.get(i))){
+                        Socket cliSocket = mapSocket.get(users.get(i));
+                        ObjectOutputStream oos1;
+                        try {
+                            oos1 = new ObjectOutputStream(cliSocket.getOutputStream());                           
+                            oos1.writeObject(new Message(userNhan,Message.MesType.INVITE_USER));
+                            
+                        } catch (IOException ex) {
+                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
+                        }                       
+                    }
+                }
                 break;
             }
             

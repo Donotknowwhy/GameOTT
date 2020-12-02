@@ -10,6 +10,7 @@ package model;
  * @author Admin
  */
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -104,4 +105,35 @@ public class User implements Serializable, Comparable<User>{
 	else
             return -1;
     }
+
+
+    public boolean equalsUser(User obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.point != other.point) {
+            return false;
+        }
+        if (this.status != other.status) {
+            return false;
+        }
+        if (this.rank != other.rank) {
+            return false;
+        }
+        if (!Objects.equals(this.account, other.account)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

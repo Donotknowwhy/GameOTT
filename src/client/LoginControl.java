@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import model.Account;
 import model.Message;
+import model.User;
 import ui.Invite;
 import ui.ListFrm;
 import ui.LoginFrm;
@@ -53,6 +54,7 @@ public class LoginControl {
                 clientControl.sendData(mesReq);
                 listFrm = new ListFrm();
                 InviteControl inviteControl = new InviteControl(clientControl, listFrm);
+                inviteControl.setUser((User) mesRecei.getObject());
                 listFrm.setVisible(true);
             }
         }       
