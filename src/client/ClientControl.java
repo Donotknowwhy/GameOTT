@@ -25,50 +25,58 @@ import utils.Usage;
  *
  * @author lamit
  */
-public class ClientControl{
+public class ClientControl {
+
     private Socket clientSocket;
     private String serverHost;
     private int serverPort;
     ObjectInputStream ois;
     ObjectOutputStream oos;
     private static ClientControl instance = null;
-    public static ClientControl getInstance(){
-        if(instance == null){
+
+    public static ClientControl getInstance() {
+        if (instance == null) {
             instance = new ClientControl();
         }
         return instance;
     }
-    public ClientControl(){
+
+    public ClientControl() {
     }
-    public Socket openConnection(){
+
+    public Socket openConnection() {
         serverHost = Usage.serverHost;
         serverPort = Usage.port;
         try {
-            clientSocket = new Socket(serverHost,serverPort);
+
+            clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
+            CheckMess checkMess = new CheckMess(clientSocket, ois);
+            checkMess.start();
             return clientSocket;
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
         ///////////////////       
-        CheckMess checkMess = new CheckMess(clientSocket,ois);
-        checkMess.start();
+
         ///////////////////
         return null;
     }
-    public void sendData(Message mesSend){
+
+    public void sendData(Message mesSend) {
         try {
             oos.writeObject(mesSend);
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public Message receiveData(){
+
+    public Message receiveData() {
         try {
             Object o = ois.readObject();
-            if(o instanceof Message){
-                Message mesReceive =(Message) o;
+            if (o instanceof Message) {
+                Message mesReceive = (Message) o;
                 return mesReceive;
             }
         } catch (IOException ex) {
@@ -80,31 +88,35 @@ public class ClientControl{
     }
 }
 
+class CheckMess extends Thread {
 
-
-class CheckMess extends Thread{
-        private Socket socketNhanInvite;
-        ObjectInputStream ois;
+    private Socket socketNhanInvite;
+    ObjectInputStream ois;
 
     public CheckMess(Socket socketNhanInvite, ObjectInputStream ois) {
         this.socketNhanInvite = socketNhanInvite;
         this.ois = ois;
     }
-        
+
     @Override
-    public void run() {            
-                Message message;
+    public void run() {
+        Message message;
+        while (true) {
             try {
                 message = (Message) ois.readObject();
-                if(message.getMesType() == Message.MesType.INVITE_USER){
+                if (message.getMesType() == Message.MesType.INVITE_USER) {
                     InviteRequest inviteRequest = new InviteRequest();
-                    inviteRequest.setVisible(true);                   
+                    inviteRequest.setVisible(true);
                 }
+                Thread.sleep(100);
             } catch (IOException ex) {
                 Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
     }
-    
+
 }
