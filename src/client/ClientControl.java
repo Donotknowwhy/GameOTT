@@ -51,21 +51,16 @@ public class ClientControl {
 
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
-            ois = new ObjectInputStream(clientSocket.getInputStream());
-            
+            ois = new ObjectInputStream(clientSocket.getInputStream()); 
             return clientSocket;
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ///////////////////       
-
-        ///////////////////
         return null;
     }
 
     public void sendData(Message mesSend) {
-        CheckMess checkMess = new CheckMess(clientSocket, ois);
-            checkMess.start();
+        
         try {
             oos.writeObject(mesSend);
         } catch (IOException ex) {
@@ -109,7 +104,7 @@ class CheckMess extends Thread {
                     InviteRequest inviteRequest = new InviteRequest();
                     inviteRequest.setVisible(true);
                 }
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (IOException ex) {
                 Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {

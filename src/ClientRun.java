@@ -21,7 +21,6 @@ public class ClientRun {
         System.out.println("1");
 //        RegisterFrm registerFrm = new RegisterFrm();
         ClientControl clientControl = new ClientControl();
-        System.out.println("");
         clientControl.openConnection();
         System.out.println("2");
         LoginControl loginControl
