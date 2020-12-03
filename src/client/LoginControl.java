@@ -56,7 +56,7 @@ public class LoginControl {
                 InviteControl inviteControl = new InviteControl(clientControl, listFrm);
                 inviteControl.setUser((User) mesRecei.getObject());
                 listFrm.setVisible(true);
-                CheckMess checkMess = new CheckMess(clientControl.getClientSocket(),clientControl.ois );
+                CheckMess checkMess = new CheckMess(clientControl.getClientSocket(),clientControl.getOis() );
                 checkMess.start();
             }
         }       
