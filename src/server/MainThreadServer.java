@@ -21,7 +21,7 @@ import utils.Usage;
  * @author lamit
  */
 public class MainThreadServer implements Runnable {
-
+    
     private String serverHost;
     private int serverPort;
     private Socket clientSocket;

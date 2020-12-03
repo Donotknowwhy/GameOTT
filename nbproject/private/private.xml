@@ -3,21 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/client/LoginControl.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/ui/ListFrm.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/server/ServerControl.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/ui/LoginFrm.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/ui/Invite.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/server/ConnectDatabase.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/ClientRun.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/ui/InviteRequest.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/model/Message.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/server/MainThreadServer.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/client/ClientControl.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/MainRun.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/client/RegisterControl.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/server/ServerDao.java</file>
-            <file>file:/C:/Users/ASUS/Desktop/GameOTT/src/utils/Usage.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/ClientRun.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/MainRun.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/client/LoginControl.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/server/ServerControl.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/client/ClientControl.java</file>
         </group>
     </open-files>
 </project-private>

@@ -34,7 +34,7 @@ public class ServerControl implements Runnable {
     ObjectInputStream ois;
     ObjectOutputStream oos;
     ServerDao serverDao;
-    private Map<User,Socket> mapSocket = new HashMap<>();
+    
     public ServerControl(Socket socket) {
         this.serverDao = new ServerDao();
         this.clientSocket = socket;
@@ -87,7 +87,9 @@ public class ServerControl implements Runnable {
                 } else {
                     try {
                         oos.writeObject(new Message(user, Message.MesType.LOGIN_SUCCESS));
-                        mapSocket.put(user, clientSocket);
+                        DataServer.mapSocket.put(user, clientSocket);
+//                        usersMapSocket.add(user);
+//                        System.out.println("da put vao map "+usersMapSocket.size());
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -130,17 +132,29 @@ public class ServerControl implements Runnable {
             }
             
             case INVITE_USER:{
+                System.out.println("moi:");
                 ArrayList<User> users2 = (ArrayList<User>) mesReceive.getObject();
+                
                 User userMoi = users2.get(0);
                 User userNhan = users2.get(1);
-                ArrayList<User> users = new ArrayList<User>(mapSocket.keySet());
+                System.out.println("u1: " + userMoi.toString());
+                System.out.println("u nhan: " + userNhan.toString());
+                ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+//                System.out.println("size"+users.size());
+//                System.out.println(usersMapSocket.size());
+                for(int k = 0; k< users.size();k++){
+                    System.out.println("danh sach:");
+                    System.out.println(users.get(k).toString());
+                }
                 for(int i= 0;i<users.size();i++){
-                    if(userNhan.equalsUser(users.get(i))){
-                        Socket cliSocket = mapSocket.get(users.get(i));
+                    if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
+                        System.out.println("eqail");
+                        Socket cliSocket = DataServer.mapSocket.get(users.get(i));
                         ObjectOutputStream oos1;
                         try {
                             oos1 = new ObjectOutputStream(cliSocket.getOutputStream());                           
                             oos1.writeObject(new Message(userNhan,Message.MesType.INVITE_USER));
+                            System.out.println("da moi!");
                             
                         } catch (IOException ex) {
                             Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);

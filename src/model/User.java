@@ -101,6 +101,8 @@ public class User implements Serializable, Comparable<User>{
         return "User{" + "id=" + id + ", account=" + account + ", point=" + point + ", status=" + status + ", rank=" + rank + '}';
     }
     
+    
+    
     @Override
     public int compareTo(User o) {
         if (point == o.point)
