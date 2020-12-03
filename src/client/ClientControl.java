@@ -52,8 +52,7 @@ public class ClientControl {
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
-            CheckMess checkMess = new CheckMess(clientSocket, ois);
-            checkMess.start();
+            
             return clientSocket;
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,6 +64,8 @@ public class ClientControl {
     }
 
     public void sendData(Message mesSend) {
+        CheckMess checkMess = new CheckMess(clientSocket, ois);
+            checkMess.start();
         try {
             oos.writeObject(mesSend);
         } catch (IOException ex) {
