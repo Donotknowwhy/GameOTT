@@ -53,6 +53,14 @@ public class ClientControl {
         return oos;
     }
 
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
+
+    public void setClientSocket(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+    
 
     public Socket openConnection() {
         serverHost = Usage.serverHost;

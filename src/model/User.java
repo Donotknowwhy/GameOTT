@@ -95,6 +95,11 @@ public class User implements Serializable, Comparable<User>{
     public Object[] toObjects(){
         return new Object[]{rank,account.getUsername(),point,status};
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", account=" + account + ", point=" + point + ", status=" + status + ", rank=" + rank + '}';
+    }
     
     @Override
     public int compareTo(User o) {

@@ -19,15 +19,15 @@ import model.User;
  */
 public class ListFrm extends javax.swing.JFrame {
 
+    int indexRow;
     DefaultTableModel model;
-    private ArrayList<User> users = new ArrayList<>();
 
     /**
      * Creates new form ListFrm
      */
     public ListFrm() {
         initComponents();
-        model = (DefaultTableModel) tableList.getModel();
+//        model = (DefaultTableModel) tableList.getModel();
     }
 
     public void addRow(ArrayList<User> listUser) {
@@ -62,26 +62,29 @@ public class ListFrm extends javax.swing.JFrame {
         });
     }
 
-    public User choseData() {
+    public User choseData(ArrayList<User> users) {
         User user = new User();
-        int indexRow = tableList.getSelectedRow();
-        if (indexRow != -1) {
+        System.out.println("---"+users.size());
+        if (indexRow >= 0) {
             user = users.get(indexRow);
-            int rank = user.getRank();
-            Account acc = user.getAccount();
-            int point = user.getPoint();           
-            boolean status = user.isStatus();
+            System.out.println(users.get(indexRow).toString());
+//            int rank = user.getRank();
+//            Account acc = user.getAccount();
+//            int point = user.getPoint();           
+//            boolean status = user.isStatus();
         }
+//        System.out.println(user.toObjects());
         return user;
     }
 
     public void setAction(ActionListener al) {
         btnInvite.addActionListener(al);
     }
-    
-     public void thongBao(String f){
-         JOptionPane.showMessageDialog(this, f);
-     }
+
+    public void thongBao(String f) {
+        JOptionPane.showMessageDialog(this, f);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,6 +112,14 @@ public class ListFrm extends javax.swing.JFrame {
                 "Rank", "Username", "Point", "Status"
             }
         ));
+        tableList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableListMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableListMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableList);
 
         btnInvite.setText("Invite");
@@ -171,6 +182,15 @@ public class ListFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new GameFrm().setVisible(true);
     }//GEN-LAST:event_btnInviteActionPerformed
+
+    private void tableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableListMouseClicked
+      
+        indexRow = tableList.getSelectedRow();
+    }//GEN-LAST:event_tableListMouseClicked
+
+    private void tableListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableListMousePressed
+       
+    }//GEN-LAST:event_tableListMousePressed
     public int getSelectedRow() {
         return tableList.getSelectedRow();
     }

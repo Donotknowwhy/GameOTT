@@ -23,11 +23,13 @@ public class InviteControl {
     private User userRecent;
     public InviteControl(ClientControl clientControl,ListFrm listFrm) {
         this.clientControl = clientControl;
-        this.listFrm = listFrm;
         Message mesRei = clientControl.receiveData();
         user = (ArrayList<User>) mesRei.getObject();
-        listFrm.showUsers(user);
+        this.listFrm = listFrm;
         listFrm.setAction(new ButtonInvite());
+        
+        listFrm.showUsers(user);
+       
     }
     public void setUser(User user){
         this.userRecent = user;
@@ -36,7 +38,7 @@ public class InviteControl {
     class ButtonInvite implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            User u = listFrm.choseData();
+            User u = listFrm.choseData(user);
             ArrayList<User> users1 = new ArrayList<>();
             users1.add(userRecent);
             users1.add(u);
