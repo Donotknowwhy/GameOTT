@@ -33,6 +33,7 @@ public class ClientControl {
     ObjectInputStream ois;
     ObjectOutputStream oos;
     private static ClientControl instance = null;
+    
 
     public static ClientControl getInstance() {
         if (instance == null) {
@@ -44,6 +45,15 @@ public class ClientControl {
     public ClientControl() {
     }
 
+    public ObjectInputStream getOis() {
+        return ois;
+    }
+
+    public ObjectOutputStream getOos() {
+        return oos;
+    }
+
+
     public Socket openConnection() {
         serverHost = Usage.serverHost;
         serverPort = Usage.port;
@@ -51,7 +61,7 @@ public class ClientControl {
 
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
-            ois = new ObjectInputStream(clientSocket.getInputStream()); 
+            ois = new ObjectInputStream(clientSocket.getInputStream());
             return clientSocket;
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,8 +70,8 @@ public class ClientControl {
     }
 
     public void sendData(Message mesSend) {
-        CheckMess checkMess = new CheckMess(clientSocket, ois);
-            checkMess.start();
+//        CheckMess checkMess = new CheckMess(clientSocket, ois);
+//        checkMess.start();
         try {
             oos.writeObject(mesSend);
         } catch (IOException ex) {
@@ -85,8 +95,10 @@ public class ClientControl {
     }
 }
 
+
 class CheckMess extends Thread {
 
+    Message mesRecei;
     private Socket socketNhanInvite;
     ObjectInputStream ois;
 
@@ -95,15 +107,30 @@ class CheckMess extends Thread {
         this.ois = ois;
     }
 
+    public Message getMesRecei() {
+        return mesRecei;
+    }
+
+    public void setMesRecei(Message mesRecei) {
+        this.mesRecei = mesRecei;
+    }
+
     @Override
     public void run() {
         Message message;
+
         while (true) {
             try {
-                message = (Message) ois.readObject();
-                if (message.getMesType() == Message.MesType.INVITE_USER) {
-                    InviteRequest inviteRequest = new InviteRequest();
-                    inviteRequest.setVisible(true);
+                Object o = ois.readObject();
+                if (o instanceof Message) {
+                    message = (Message) o;
+                    setMesRecei(message);
+                    if (message.getMesType() == Message.MesType.INVITE_USER) {
+                        InviteRequest inviteRequest = new InviteRequest();
+                        inviteRequest.setVisible(true);
+                    } else {
+                        
+                    }
                 }
                 Thread.sleep(1000);
             } catch (IOException ex) {
