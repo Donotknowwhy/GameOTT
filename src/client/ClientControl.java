@@ -60,7 +60,8 @@ public class ClientControl {
     }
 
     public void sendData(Message mesSend) {
-        
+        CheckMess checkMess = new CheckMess(clientSocket, ois);
+            checkMess.start();
         try {
             oos.writeObject(mesSend);
         } catch (IOException ex) {
