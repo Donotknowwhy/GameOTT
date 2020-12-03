@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import model.Message;
+import ui.InviteRequest;
 import ui.LoginFrm;
 import utils.Usage;
 
@@ -50,6 +51,10 @@ public class ClientControl{
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ///////////////////       
+        CheckMess checkMess = new CheckMess(clientSocket,ois);
+        checkMess.start();
+        ///////////////////
         return null;
     }
     public void sendData(Message mesSend){
@@ -74,19 +79,27 @@ public class ClientControl{
         return null;
     }
 }
+
+
+
 class CheckMess extends Thread{
         private Socket socketNhanInvite;
-        private String serverHost;
-        private int serverPort;
         ObjectInputStream ois;
-        ObjectOutputStream oos;
+
+    public CheckMess(Socket socketNhanInvite, ObjectInputStream ois) {
+        this.socketNhanInvite = socketNhanInvite;
+        this.ois = ois;
+    }
+        
     @Override
-    public void run() {
+    public void run() {            
+                Message message;
             try {
-                ois = new ObjectInputStream(socketNhanInvite.getInputStream());
-                
-                Object o = ois.readObject();
-                if(o instanceof )
+                message = (Message) ois.readObject();
+                if(message.getMesType() == Message.MesType.INVITE_USER){
+                    InviteRequest inviteRequest = new InviteRequest();
+                    inviteRequest.setVisible(true);                   
+                }
             } catch (IOException ex) {
                 Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
