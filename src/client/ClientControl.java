@@ -111,14 +111,15 @@ class CheckMess extends Thread {
     Message mesRecei;
     private Socket socketNhanInvite;
     ObjectInputStream ois;
-
-    public CheckMess(Socket socketNhanInvite, ObjectInputStream ois) {
+    ClientControl clientControl;
+    public CheckMess(Socket socketNhanInvite, ClientControl clientControl) {
         this.socketNhanInvite = socketNhanInvite;
         try {
             this.ois = new ObjectInputStream(socketNhanInvite.getInputStream());
         } catch (IOException ex) {
             Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.clientControl = clientControl;
         System.out.println(this.ois);
     }
 
@@ -142,6 +143,7 @@ class CheckMess extends Thread {
                     setMesRecei(message);
                     if (message.getMesType() == Message.MesType.INVITE_USER) {
                         InviteRequest inviteRequest = new InviteRequest();
+                        InviteRequestControl irc = new InviteRequestControl(inviteRequest, clientControl);
                         inviteRequest.setVisible(true);
                     } else {
                         

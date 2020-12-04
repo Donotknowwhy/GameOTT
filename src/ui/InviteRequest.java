@@ -5,6 +5,8 @@
  */
 package ui;
 
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author ASUS
@@ -18,7 +20,10 @@ public class InviteRequest extends javax.swing.JFrame {
         initComponents();
         this.setLocation(583,255);
     }
-
+    public void setAction(ActionListener al1, ActionListener al2){
+        btnAccept.addActionListener(al1);
+        btnReject.addActionListener(al2);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,8 +38,8 @@ public class InviteRequest extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAccept = new javax.swing.JButton();
+        btnReject = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,17 +51,17 @@ public class InviteRequest extends javax.swing.JFrame {
 
         jLabel4.setText("Chấp nhận chơi?");
 
-        jButton1.setText("Chấp nhận");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAccept.setText("Chấp nhận");
+        btnAccept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAcceptActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Từ chối");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnReject.setText("Từ chối");
+        btnReject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRejectActionPerformed(evt);
             }
         });
 
@@ -78,9 +83,9 @@ public class InviteRequest extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(jButton1)
+                        .addComponent(btnAccept)
                         .addGap(49, 49, 49)
-                        .addComponent(jButton2)))
+                        .addComponent(btnReject)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -95,8 +100,8 @@ public class InviteRequest extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnAccept)
+                    .addComponent(btnReject))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -116,18 +121,18 @@ public class InviteRequest extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAcceptActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRejectActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAccept;
+    private javax.swing.JButton btnReject;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
