@@ -64,12 +64,14 @@ public class ClientControl {
 
     public Socket openConnection() {
         serverHost = Usage.serverHost;
+        System.out.println("open connection");
         serverPort = Usage.port;
         try {
 
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
+            System.out.println(ois);
             return clientSocket;
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,7 +114,12 @@ class CheckMess extends Thread {
 
     public CheckMess(Socket socketNhanInvite, ObjectInputStream ois) {
         this.socketNhanInvite = socketNhanInvite;
-        this.ois = ois;
+        try {
+            this.ois = new ObjectInputStream(socketNhanInvite.getInputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(this.ois);
     }
 
     public Message getMesRecei() {
