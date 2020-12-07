@@ -13,10 +13,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import model.Game;
 import model.Message;
+import model.User;
+import ui.GameFrm;
 import ui.InviteRequest;
 import ui.LoginFrm;
 import utils.Usage;
@@ -143,10 +147,14 @@ class CheckMess extends Thread {
                     setMesRecei(message);
                     if (message.getMesType() == Message.MesType.INVITE_USER) {
                         InviteRequest inviteRequest = new InviteRequest();
-                        InviteRequestControl irc = new InviteRequestControl(inviteRequest, clientControl);
+                        ArrayList<User> users = (ArrayList<User>) message.getObject();
+                        InviteRequestControl irc = new InviteRequestControl(inviteRequest, clientControl, users);
                         inviteRequest.setVisible(true);
-                    } else {
-                        
+                    } else if(message.getMesType() == Message.MesType.START_GAME) {
+                        GameFrm gameFrm = new GameFrm();
+                        Game game = (Game) message.getObject();
+                        GameControl gameControl = new GameControl(gameFrm,clientControl,game);
+                        gameFrm.setVisible(true);
                     }
                 }
                 Thread.sleep(1000);
