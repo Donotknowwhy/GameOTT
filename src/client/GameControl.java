@@ -5,10 +5,17 @@
  */
 package client;
 
+import model.Game;
+import ui.GameFrm;
+
 /**
  *
  * @author ASUS
  */
 public class GameControl {
+
+    GameControl(GameFrm gameFrm, ClientControl clientControl, Game game) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
