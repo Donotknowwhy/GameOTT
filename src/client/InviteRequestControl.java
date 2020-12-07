@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import model.Message;
 import model.User;
-import sun.tools.jconsole.Messages;
 import ui.InviteRequest;
 
 /**
