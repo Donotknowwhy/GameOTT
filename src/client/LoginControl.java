@@ -37,7 +37,6 @@ public class LoginControl {
         this.clientControl = clientControl;
         this.clientControl.setLoginControl(this);
         this.loginFrm = loginFrm;
-        this.loginFrm.setVisible(true);
         this.loginFrm.setAction(new ButtonListener(), new ButtonRegister());
     }
 
