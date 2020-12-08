@@ -139,11 +139,13 @@ public class ClientControl {
                         }
                         default: break;
                     }
-//                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 }
             }  catch (IOException ex) {
                 Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
