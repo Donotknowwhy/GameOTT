@@ -26,42 +26,49 @@ import ui.RegisterFrm;
  * @author lamit
  */
 public class LoginControl {
+
+    Account account = new Account();
+    Message mesRecei = new Message();
     private LoginFrm loginFrm;
     private ClientControl clientControl;
     private ListFrm listFrm;
-    public LoginControl(LoginFrm loginFrm,ClientControl clientControl){
+
+    public LoginControl(LoginFrm loginFrm, ClientControl clientControl) {
         this.clientControl = clientControl;
         this.loginFrm = loginFrm;
         this.loginFrm.setVisible(true);
         this.loginFrm.setAction(new ButtonListener(), new ButtonRegister());
     }
-    class ButtonListener implements ActionListener{
+
+    class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             String username = loginFrm.getUsername();
             String password = loginFrm.getPassword();
-            System.out.println(password);
-            Account account = new Account(username, password);
+            account.setUsername(username);
+            account.setPassword(password);
             Message mesSend = new Message(account, Message.MesType.LOGIN);
             clientControl.sendData(mesSend);
-            Message mesRecei = clientControl.receiveData();
-            if(mesRecei.getMesType() == Message.MesType.LOGIN_FAIL){
-                loginFrm.showMessage("Login Fail");
-            }else if(mesRecei.getMesType() == Message.MesType.LOGIN_SUCCESS){
-                loginFrm.showMessage("Login Success");
-                Message mesReq = new Message(account, Message.MesType.GET_SCOREBOARD);
-                clientControl.sendData(mesReq);
-                listFrm = new ListFrm();
-                InviteControl inviteControl = new InviteControl(clientControl, listFrm);
-                inviteControl.setUser((User) mesRecei.getObject());
-                listFrm.setVisible(true);
-                CheckMess checkMess = new CheckMess(clientControl.getClientSocket(),clientControl.getOis() );
-                checkMess.start();
-            }
-        }       
+//            mesRecei = clientControl.receiveData();
+        }
     }
-    class ButtonRegister implements ActionListener{
+
+    public void showMessageFail() {
+        loginFrm.showMessage("Login Fail");
+    }
+
+    public void showMessageSuccess(Message mesRecei) {
+        loginFrm.showMessage("Login Success");
+        Message mesReq = new Message(account, Message.MesType.GET_SCOREBOARD);
+        clientControl.sendData(mesReq);
+        listFrm = new ListFrm();
+        InviteControl inviteControl = new InviteControl(clientControl, listFrm);
+        inviteControl.setUser((User) mesRecei.getObject());
+        listFrm.setVisible(true);
+    }
+
+    class ButtonRegister implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -69,6 +76,6 @@ public class LoginControl {
             registerFrm.setVisible(true);
             RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
         }
-        
+
     }
 }

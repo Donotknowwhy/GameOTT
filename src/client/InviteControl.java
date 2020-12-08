@@ -23,13 +23,8 @@ public class InviteControl {
     private User userRecent;
     public InviteControl(ClientControl clientControl,ListFrm listFrm) {
         this.clientControl = clientControl;
-        Message mesRei = clientControl.receiveData();
-        user = (ArrayList<User>) mesRei.getObject();
         this.listFrm = listFrm;
         listFrm.setAction(new ButtonInvite());
-        
-        listFrm.showUsers(user);
-       
     }
     public void setUser(User user){
         this.userRecent = user;
@@ -49,6 +44,9 @@ public class InviteControl {
                 listFrm.thongBao("tai khoan nay khong online!");
             }
         }
-        
+    }
+    public void showListUser(Message mesRei){
+        user = (ArrayList<User>) mesRei.getObject();
+        listFrm.showUsers(user);
     }
 }

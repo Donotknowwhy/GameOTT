@@ -37,13 +37,13 @@ public class RegisterControl {
             Account account = new Account(username, password);
             Message mesSend = new Message(account, Message.MesType.REGISTER);
             clientControl.sendData(mesSend);
-            Message mesRecei = clientControl.receiveData();
-            if(mesRecei.getMesType() == Message.MesType.REGISTER_FAIL){
-                registerFrm.showMessage("Register Fail");
-            }else if(mesRecei.getMesType() == Message.MesType.REGISTER_SUCCESS){
-                registerFrm.showMessage("Register Success");
-            }
         }
         
+    }
+    public void showMessageFail(){
+        registerFrm.showMessage("Register Fail");
+    }
+    public void showMessageSuccess(){
+        registerFrm.showMessage("Register Success");
     }
 }

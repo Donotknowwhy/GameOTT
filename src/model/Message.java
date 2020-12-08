@@ -66,7 +66,7 @@ public class Message implements Serializable {
         REPLY_SCOREBOARD,
         //list
         LIST_USERS,
-        lIST_FULL,
+        LIST_FULL,
         LIST_NULL,
         //moi
         INVITE_USER

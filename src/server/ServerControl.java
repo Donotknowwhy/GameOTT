@@ -117,7 +117,7 @@ public class ServerControl implements Runnable {
                 ArrayList<User> us = serverDao.getUsers();
                 if(us != null){
                     try {
-                        oos.writeObject(new Message(us, Message.MesType.lIST_FULL));
+                        oos.writeObject(new Message(us, Message.MesType.LIST_FULL));
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -175,11 +175,6 @@ public class ServerControl implements Runnable {
             
         }
         
-    }
-    
-    private Message createMessage() {
-        Message mes = new Message();
-        return mes;
     }
 
 }

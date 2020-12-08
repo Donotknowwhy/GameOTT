@@ -26,14 +26,15 @@ import utils.Usage;
  * @author lamit
  */
 public class ClientControl {
-
+    private LoginControl loginControl;
+    private RegisterControl registerControl;
+    private InviteControl inviteControl;
     private Socket clientSocket;
     private String serverHost;
     private int serverPort;
     ObjectInputStream ois;
     ObjectOutputStream oos;
     private static ClientControl instance = null;
-    
 
     public static ClientControl getInstance() {
         if (instance == null) {
@@ -41,27 +42,34 @@ public class ClientControl {
         }
         return instance;
     }
-
+    
     public ClientControl() {
     }
 
-    public ObjectInputStream getOis() {
-        return ois;
+    public LoginControl getLoginControl() {
+        return loginControl;
     }
 
-    public ObjectOutputStream getOos() {
-        return oos;
+    public void setLoginControl(LoginControl loginControl) {
+        this.loginControl = loginControl;
     }
 
-    public Socket getClientSocket() {
-        return clientSocket;
+    public RegisterControl getRegisterControl() {
+        return registerControl;
     }
 
-    public void setClientSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
+    public void setRegisterControl(RegisterControl registerControl) {
+        this.registerControl = registerControl;
+    }
+
+    public InviteControl getInviteControl() {
+        return inviteControl;
+    }
+
+    public void setInviteControl(InviteControl inviteControl) {
+        this.inviteControl = inviteControl;
     }
     
-
     public Socket openConnection() {
         serverHost = Usage.serverHost;
         System.out.println("open connection");
@@ -80,8 +88,6 @@ public class ClientControl {
     }
 
     public void sendData(Message mesSend) {
-//        CheckMess checkMess = new CheckMess(clientSocket, ois);
-//        checkMess.start();
         try {
             oos.writeObject(mesSend);
         } catch (IOException ex) {
@@ -89,22 +95,62 @@ public class ClientControl {
         }
     }
 
-    public Message receiveData() {
-        try {
-            Object o = ois.readObject();
-            if (o instanceof Message) {
-                Message mesReceive = (Message) o;
-                return mesReceive;
+//    public Message receiveData() {
+//        try {
+//            Object o = ois.readObject();
+//            if (o instanceof Message) {
+//                Message mesReceive = (Message) o;
+//                return mesReceive;
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
+    Thread threadReceive = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    Object o = ois.readObject();
+                    Message message = (Message) o;
+                    switch(message.getMesType()){
+                        case  LOGIN_FAIL:{
+                            loginControl.showMessageFail();
+                            break;
+                        }
+                        case LOGIN_SUCCESS:{
+                            loginControl.showMessageSuccess(message);
+                            break;
+                        }
+                        case REGISTER_FAIL:{
+                            registerControl.showMessageFail();
+                            break;
+                        }
+                        case REGISTER_SUCCESS:{
+                            registerControl.showMessageSuccess();
+                            break;
+                        }
+                        case LIST_FULL:{
+                            inviteControl.showListUser(message);
+                            break;
+                        }
+                        default: break;
+                    }
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
-    }
+    });
 }
-
 
 class CheckMess extends Thread {
 
@@ -144,7 +190,7 @@ class CheckMess extends Thread {
                         InviteRequest inviteRequest = new InviteRequest();
                         inviteRequest.setVisible(true);
                     } else {
-                        
+
                     }
                 }
                 Thread.sleep(1000);
