@@ -24,6 +24,7 @@ public class RegisterControl {
     private ClientControl clientControl;
     public RegisterControl(RegisterFrm registerFrm, ClientControl clientControl){
         this.clientControl = clientControl;
+        this.clientControl.setRegisterControl(this);
         this.registerFrm = registerFrm;
         this.registerFrm.setVisible(true);
         this.registerFrm.setAction(new ButtonListener());

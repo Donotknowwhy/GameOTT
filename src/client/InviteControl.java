@@ -23,6 +23,7 @@ public class InviteControl {
     private User userRecent;
     public InviteControl(ClientControl clientControl,ListFrm listFrm) {
         this.clientControl = clientControl;
+        this.clientControl.setInviteControl(this);
         this.listFrm = listFrm;
         listFrm.setAction(new ButtonInvite());
     }
