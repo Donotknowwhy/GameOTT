@@ -150,6 +150,9 @@ public class ClientControl {
             }
         }
     });
+    public void startThreadRecei(){
+        threadReceive.start();
+    }
 }
 
 class CheckMess extends Thread {

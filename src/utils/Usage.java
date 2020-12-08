@@ -11,7 +11,7 @@ package utils;
  */
 public interface Usage {
     public int port = 4567;
-    public String serverHost = "172.23.243.54";
+    public String serverHost = "192.168.39.109";
     
     public String findAccount = "select * from tblaccount where _username = ? and _password = ?";
     public String register = "insert into tblaccount(_username,_password) values(?,?)";

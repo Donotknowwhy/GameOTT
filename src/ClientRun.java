@@ -21,6 +21,7 @@ public class ClientRun {
 //        RegisterFrm registerFrm = new RegisterFrm();
         ClientControl clientControl = new ClientControl();
         clientControl.openConnection();
+        clientControl.startThreadRecei();
         LoginControl loginControl
                  = new LoginControl(loginFrm,clientControl);
 //        RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
