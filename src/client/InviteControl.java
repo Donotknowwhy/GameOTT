@@ -32,50 +32,21 @@ public class InviteControl {
         this.clientControl = clientControl;
         this.clientControl.setInviteControl(this);
         this.listFrm = listFrm;
-        listFrm.setActionM(new ButtonReload(),new ButtonInvite(), new WindowClosing());
+        listFrm.setActionM(new ButtonLogout(),new ButtonInvite());
     }
 
     public void setUser(User user) {
         this.userRecent = user;
     }
-    class WindowClosing implements WindowListener{
-
-        @Override
-        public void windowOpened(WindowEvent we) {
-        }
-
-        @Override
-        public void windowClosing(WindowEvent we) {
-            DataClient.userCurrent.setStatus(0);
-            Message message = new Message(DataClient.userCurrent, Message.MesType.CHANGE_USER_STATUS);
-            clientControl.sendData(message);
-        }
-
-        @Override
-        public void windowClosed(WindowEvent we) {
-        }
-
-        @Override
-        public void windowIconified(WindowEvent we) {
-        }
-
-        @Override
-        public void windowDeiconified(WindowEvent we) {
-        }
-
-        @Override
-        public void windowActivated(WindowEvent we) {
-        }
-
-        @Override
-        public void windowDeactivated(WindowEvent we) {
-        }
-        
-    }
-    class ButtonReload implements ActionListener{
+    class ButtonLogout implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            DataClient.userCurrent.setStatus(0);
+            Message message = new Message(DataClient.userCurrent, Message.MesType.CHANGE_USER_STATUS);
+            clientControl.sendData(message);
+            listFrm._dispose();
+            DataClient.userCurrent = new User();
         }
         
     }

@@ -30,10 +30,12 @@ public class ListFrm extends javax.swing.JFrame {
         initComponents();
 //        model = (DefaultTableModel) tableList.getModel();
     }
-    public void setActionM(ActionListener al1,ActionListener al,WindowListener wl){
-        btnReload.addActionListener(al1);
+    public void setActionM(ActionListener al1,ActionListener al){
+        btnLogout.addActionListener(al1);
         btnInvite.addActionListener(al);
-        this.addWindowListener(wl);
+    }
+    public void _dispose(){
+        this.dispose();
     }
     public void addRow(ArrayList<User> listUser) {
 
@@ -101,7 +103,7 @@ public class ListFrm extends javax.swing.JFrame {
         tableList = new javax.swing.JTable();
         btnInvite = new javax.swing.JButton();
         back = new javax.swing.JButton();
-        btnReload = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,7 +141,7 @@ public class ListFrm extends javax.swing.JFrame {
             }
         });
 
-        btnReload.setText("Reload");
+        btnLogout.setText("Log out");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,7 +161,7 @@ public class ListFrm extends javax.swing.JFrame {
                 .addGap(399, 399, 399)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnReload)
+                .addComponent(btnLogout)
                 .addGap(102, 102, 102))
         );
         layout.setVerticalGroup(
@@ -168,7 +170,7 @@ public class ListFrm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReload))
+                    .addComponent(btnLogout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
@@ -241,7 +243,7 @@ public class ListFrm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
     private javax.swing.JButton btnInvite;
-    private javax.swing.JButton btnReload;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableList;
