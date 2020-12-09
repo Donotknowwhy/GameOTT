@@ -13,4 +13,13 @@ import model.User;
  */
 public class DataClient {
     static User userCurrent = new User();
+
+    public static void setUserCurrent(User userCurrent) {
+        DataClient.userCurrent = userCurrent;
+    }
+
+    public static User getUserCurrent() {
+        return userCurrent;
+    }
+    
 }

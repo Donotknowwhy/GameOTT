@@ -67,7 +67,7 @@ public class ClientControl {
                             case LOGIN_SUCCESS: {
                                 loginControl.showMessageSuccess(message);
                                 User userCurrent = (User) message.getObject();
-                                DataClient.userCurrent = userCurrent;
+                                DataClient.setUserCurrent(userCurrent);
                                 break;
                             }
                             case REGISTER_FAIL: {
@@ -77,7 +77,7 @@ public class ClientControl {
                             case REGISTER_SUCCESS: {
                                 registerControl.showMessageSuccess();
                                 User userCurrent = (User) message.getObject();
-                                DataClient.userCurrent = userCurrent;
+                                DataClient.setUserCurrent(userCurrent);
                                 break;
                             }
                             case LIST_FULL: {

@@ -43,8 +43,10 @@ public class InviteControl {
         @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("click");
-            DataClient.userCurrent.setStatus(0);
-            Message message = new Message(DataClient.userCurrent, Message.MesType.CHANGE_USER_STATUS);
+            User user = DataClient.getUserCurrent();
+            user.setStatus(0);
+            DataClient.setUserCurrent(userRecent);
+            Message message = new Message(userRecent, Message.MesType.CHANGE_USER_STATUS);
             clientControl.sendData(message);
             listFrm._dispose();
             DataClient.userCurrent = new User();
