@@ -45,8 +45,8 @@ public class InviteControl {
             System.out.println("click");
             User user = DataClient.getUserCurrent();
             user.setStatus(0);
-            DataClient.setUserCurrent(userRecent);
-            Message message = new Message(userRecent, Message.MesType.CHANGE_USER_STATUS);
+            DataClient.setUserCurrent(user);
+            Message message = new Message(user, Message.MesType.CHANGE_USER_STATUS);
             clientControl.sendData(message);
             listFrm._dispose();
             DataClient.userCurrent = new User();
