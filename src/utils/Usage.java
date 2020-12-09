@@ -21,7 +21,7 @@ public interface Usage {
     public String insertChoice = "insert into tblChoice(_userid,_gameid,choice) values(?,?,?)";
     public String getAllChoiceByIdGame = "select * from tblchoice where _gameid = ?";
     public String insertChoiceResult = "update tblChoice set result = ? where id = ?";
-    public String getAllUser = "select u._point,u._status,a._username from tbluser as u, tblaccount as a "
+    public String getAllUser = "select u._point,u._status,a._username,u.id from tbluser as u, tblaccount as a "
             + "where u._accid = a.id";
     public String updateUserPoint = "update tbluser set _point = _point + ? where id = ?";
     //update status
