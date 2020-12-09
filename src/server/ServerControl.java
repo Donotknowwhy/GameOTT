@@ -205,7 +205,7 @@ public class ServerControl implements Runnable {
                         if(users.get(i).getId() == choice1.getUser().getId()){
                             DataServer.sendMessage(users.get(i), new Message(choice1, Message.MesType.REPLY_RESULT));
                         }
-                        if(users.get(i).getId() == choice1.getUser().getId()){
+                        if(users.get(i).getId() == choice2.getUser().getId()){
                             DataServer.sendMessage(users.get(i), new Message(choice2, Message.MesType.REPLY_RESULT));
                         
                         }
