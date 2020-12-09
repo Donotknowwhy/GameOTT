@@ -7,7 +7,9 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import model.Choice;
 import model.Game;
+import model.Message;
 import ui.GameFrm;
 
 /**
@@ -20,6 +22,7 @@ public class GameControl {
     private Game game;
     public GameControl(GameFrm gameFrm,ClientControl clientControl, Game game) {
         this.clientControl = clientControl;
+        this.clientControl.setGameControl(this);
         this.gameFrm = gameFrm;
         this.gameFrm.setVisible(true);
         this.game = game;
@@ -28,10 +31,36 @@ public class GameControl {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            int choice = gameFrm.getChoice();
+            Choice.ChoiceType choiceType =  Choice.ChoiceType.KEO;
             
+            int cho = gameFrm.getChoice();
+            switch(cho){
+                case 1:{
+                    choiceType = Choice.ChoiceType.KEO;
+                    break;
+                }
+                case 2:{
+                    choiceType = Choice.ChoiceType.BUA;
+                    break;
+                }
+                case 3:{
+                    choiceType = Choice.ChoiceType.BAO;
+                    break;
+                }
+            }
+            Choice choice = new Choice(DataClient.userCurrent, game, choiceType, 0);
+            Message mesSend = new Message(choice, Message.MesType.SEND_CHOICE);
+            clientControl.sendData(mesSend);
         }
-        
+        public void checkResult(Choice choice){
+            if(choice.getResult()==1){
+                gameFrm.showMessage("Draw");
+            }else if(choice.getResult()==2){
+                gameFrm.showMessage("Win");
+            }else{
+                gameFrm.showMessage("Lose");
+            }
+        }
     }
     
 }

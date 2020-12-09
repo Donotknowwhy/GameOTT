@@ -24,6 +24,9 @@ public class Choice implements Serializable {
     private ChoiceType choice;
     private int result;
 
+    public Choice() {
+    }
+
     public Choice(int id, User user, Game game, ChoiceType choice, int result) {
         this.id = id;
         this.user = user;
@@ -79,10 +82,20 @@ public class Choice implements Serializable {
         this.result = result;
     }
 
-}
-
-enum ChoiceType {
-    BUA,
-    KEO,
-    BAO
+    public static enum ChoiceType {
+        BUA,
+        KEO,
+        BAO
+    }
+    public int compareTo(Choice choice){
+        if(this.getChoice() == choice.getChoice()){
+            return 0;
+        }
+        if((this.getChoice() == ChoiceType.BUA && choice.getChoice() == ChoiceType.KEO)
+                || (this.getChoice() == ChoiceType.KEO && choice.getChoice() == ChoiceType.BAO)
+                ||  (this.getChoice() == ChoiceType.BAO && choice.getChoice() == ChoiceType.BUA)){
+            return 1;
+        }
+        return -1;
+    }
 }

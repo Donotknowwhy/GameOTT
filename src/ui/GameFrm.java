@@ -5,6 +5,8 @@
  */
 package ui;
 
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,6 +19,9 @@ public class GameFrm extends javax.swing.JFrame {
      */
     public GameFrm() {
         initComponents();
+    }
+    public void setAction(ActionListener al1){
+        btnsubmit.addActionListener(al1);
     }
 
     /**
@@ -34,7 +39,7 @@ public class GameFrm extends javax.swing.JFrame {
         bao = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        submit = new javax.swing.JButton();
+        btnsubmit = new javax.swing.JButton();
         out = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,7 +58,7 @@ public class GameFrm extends javax.swing.JFrame {
 
         jLabel2.setText("Lựa chọn của bạn:");
 
-        submit.setText("Submit");
+        btnsubmit.setText("Submit");
 
         out.setText("out");
         out.addActionListener(new java.awt.event.ActionListener() {
@@ -77,7 +82,7 @@ public class GameFrm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(submit))))
+                                .addComponent(btnsubmit))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(242, 242, 242)
                         .addComponent(jLabel1)))
@@ -95,7 +100,7 @@ public class GameFrm extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(submit))
+                    .addComponent(btnsubmit))
                 .addGap(18, 18, 18)
                 .addComponent(keo)
                 .addGap(18, 18, 18)
@@ -127,6 +132,9 @@ public class GameFrm extends javax.swing.JFrame {
            res = 3;
         }
         return res;
+    }
+    public void showMessage(String content){
+        JOptionPane.showMessageDialog(this,content);
     }
     /**
      * @param args the command line arguments
@@ -166,12 +174,12 @@ public class GameFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton bao;
+    private javax.swing.JButton btnsubmit;
     private javax.swing.JRadioButton bua;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton keo;
     private javax.swing.JButton out;
-    private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
 }

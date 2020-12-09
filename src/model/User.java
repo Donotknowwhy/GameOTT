@@ -26,6 +26,12 @@ public class User implements Serializable, Comparable<User>{
     private int rank;
     public User() {
     }
+
+    public User(int id) {
+        this.id = id;
+    }
+    
+    
     
     public User(Account account, int point, boolean status) {
         this.account = account;

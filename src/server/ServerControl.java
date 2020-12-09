@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
+import model.Choice;
 import model.Game;
 import model.Message;
 import model.User;
@@ -164,16 +165,12 @@ public class ServerControl implements Runnable {
 //                System.out.println(users);
                 System.out.println("users" + users.size());
                 Game game = serverDao.insertGame();
-//                Game game = new Game();
                 for (int i = 0; i < users.size(); i++) {
                     System.out.println(users.get(i));
                     if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
-                            System.out.println("aaa");
                             DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
-//                            oos.writeObject(new Message(game, Message.MesType.START_GAME));
                       
-                    } else if (userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
-                        System.out.println("bbb");    
+                    } else if (userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {   
                         DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
                     }
                 }
@@ -182,7 +179,39 @@ public class ServerControl implements Runnable {
             case DENY_REQUEST: {
                 break;
             }
-
+            case SEND_CHOICE:{
+                Choice choice = (Choice) mesReceive.getObject();
+                Game game = choice.getGame();
+                serverDao.insertChoice(choice);
+                ArrayList<Choice> listChoice = serverDao.getChoiceByIdGame(game.getId());
+                Choice choice1 = new Choice();
+                Choice choice2 = new Choice();
+                if(listChoice.size() == 2){
+                    choice1 = listChoice.get(0);
+                    choice2 = listChoice.get(1);
+                    if(choice1.compareTo(choice2)>0){
+                        choice1.setResult(2);
+                        choice2.setResult(0);
+                    }else if(choice1.compareTo(choice2)==0){
+                        choice1.setResult(1);
+                        choice2.setResult(1);
+                    }else{
+                        choice1.setResult(0);
+                        choice2.setResult(2);
+                    }
+                    ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                    for(int i = 0; i < users.size(); i++){
+                        if(users.get(i).getId() == choice1.getUser().getId()){
+                            DataServer.sendMessage(users.get(i), new Message(choice1, Message.MesType.REPLY_RESULT));
+                        }
+                        if(users.get(i).getId() == choice1.getUser().getId()){
+                            DataServer.sendMessage(users.get(i), new Message(choice2, Message.MesType.REPLY_RESULT));
+                        
+                        }
+                    }
+                }
+                break;
+            }
             default:
                 break;
         }

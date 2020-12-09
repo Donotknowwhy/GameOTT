@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import model.Message;
+import model.User;
 import ui.InviteRequest;
 import ui.LoginFrm;
 import utils.Usage;
@@ -63,6 +64,8 @@ public class ClientControl {
                             }
                             case LOGIN_SUCCESS: {
                                 loginControl.showMessageSuccess(message);
+                                User userCurrent = (User) message.getObject();
+                                DataClient.userCurrent = userCurrent;
                                 break;
                             }
                             case REGISTER_FAIL: {

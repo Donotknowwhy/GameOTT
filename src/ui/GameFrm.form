@@ -41,7 +41,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="submit" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnsubmit" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -67,7 +67,7 @@
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="submit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnsubmit" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="keo" min="-2" max="-2" attributes="0"/>
@@ -118,7 +118,7 @@
         <Property name="text" type="java.lang.String" value="L&#x1ef1;a ch&#x1ecd;n c&#x1ee7;a b&#x1ea1;n:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="submit">
+    <Component class="javax.swing.JButton" name="btnsubmit">
       <Properties>
         <Property name="text" type="java.lang.String" value="Submit"/>
       </Properties>

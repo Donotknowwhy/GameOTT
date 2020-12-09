@@ -31,9 +31,10 @@ import utils.Usage;
  *
  * @author lamit
  */
-public class ServerDao{
+public class ServerDao {
 
     private Connection conn;
+
     public ServerDao() {
         conn = ConnectDatabase.getInstance().getConnection();
         try {
@@ -42,6 +43,7 @@ public class ServerDao{
             Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public User checkLogin(Account acc) {
         User user = new User();
         try {
@@ -59,10 +61,10 @@ public class ServerDao{
                 user.setStatus(true);
                 return user;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         }
         return null;
     }
@@ -82,7 +84,7 @@ public class ServerDao{
                 //get id insert last
                 ResultSet rs1 = pre.getGeneratedKeys();
                 int lastRowId = 0;
-                if(rs1.next()){
+                if (rs1.next()) {
                     lastRowId = rs1.getInt(1);
                 }
                 PreparedStatement pre1 = conn.prepareStatement(Usage.insertUser);
@@ -115,7 +117,7 @@ public class ServerDao{
             pre.executeUpdate();
             ResultSet resultGetGenerateKey = pre.getGeneratedKeys();
             int idGame = 0;
-            if(resultGetGenerateKey.next()){
+            if (resultGetGenerateKey.next()) {
                 idGame = resultGetGenerateKey.getInt(1);
             }
             game.setTimeCreated(date);
@@ -140,20 +142,18 @@ public class ServerDao{
             pre.setInt(2, choice.getGame().getId());
             int choiceInt = 0;
             /**
-             * BUA = 1
-             * KEO = 2
-             * BAO = 3
+             * BUA = 1 KEO = 2 BAO = 3
              */
-            switch(choice.getChoice()){
-                case BUA:{
+            switch (choice.getChoice()) {
+                case BUA: {
                     choiceInt = 1;
                     break;
                 }
-                case KEO:{
+                case KEO: {
                     choiceInt = 2;
                     break;
                 }
-                case  BAO:{
+                case BAO: {
                     choiceInt = 3;
                     break;
                 }
@@ -171,6 +171,58 @@ public class ServerDao{
         }
     }
 
+    public ArrayList<Choice> getChoiceByIdGame(int idgame) {
+        ArrayList<Choice> listChoice = new ArrayList<>();
+        try {
+            PreparedStatement pre = conn.prepareStatement(Usage.getAllChoiceByIdGame);
+            pre.setInt(1, idgame);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                User user = new User(rs.getInt(2));
+                Game game = new Game(rs.getInt(3));
+                Choice.ChoiceType choiceType = Choice.ChoiceType.BUA;
+                switch (rs.getInt(4)) {
+                    case 1: {
+                        choiceType = Choice.ChoiceType.KEO;
+                        break;
+                    }
+                    case 2: {
+                        choiceType = Choice.ChoiceType.BUA;
+                        break;
+                    }
+                    case 3: {
+                        choiceType = Choice.ChoiceType.BAO;
+                        break;
+                    }
+                }
+                Choice choice = new Choice(rs.getInt(0), user, game, choiceType, rs.getInt(5));
+                listChoice.add(choice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listChoice;
+    }
+    public void insertChoiceResult(int id, int result){
+        try {
+            PreparedStatement pre = conn.prepareStatement(Usage.insertChoiceResult);
+            pre.setInt(1, result);
+            pre.setInt(2, id);
+            pre.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateUserPoint(Choice choice){
+        try {
+            PreparedStatement pre = conn.prepareStatement(Usage.updateUserPoint);
+            pre.setInt(1, choice.getResult());
+            pre.setInt(2, choice.getUser().getId());
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public ArrayList<User> getAllUser() {
         ArrayList<User> listUser = new ArrayList<>();
         try {
@@ -184,9 +236,9 @@ public class ServerDao{
                 User user = new User(new Account(username), point, status);
                 listUser.add(user);
             }
-            Collections.sort(listUser,new CompareUser());
+            Collections.sort(listUser, new CompareUser());
             int rank = 1;
-            for(User user : listUser){
+            for (User user : listUser) {
                 user.setRank(rank++);
             }
             conn.commit();
@@ -201,8 +253,8 @@ public class ServerDao{
         }
         return listUser;
     }
-    
-    public ArrayList<User> getUsers(){
+
+    public ArrayList<User> getUsers() {
         ArrayList<User> listUser = new ArrayList<>();
         try {
             PreparedStatement pre = conn.prepareStatement(Usage.getAllUser);
@@ -215,9 +267,9 @@ public class ServerDao{
                 User user = new User(new Account(username), point, status);
                 listUser.add(user);
             }
-            Collections.sort(listUser,new CompareUser());
+            Collections.sort(listUser, new CompareUser());
             int rank = 1;
-            for(User user : listUser){
+            for (User user : listUser) {
                 user.setRank(rank++);
             }
             conn.commit();
@@ -232,16 +284,11 @@ public class ServerDao{
         }
         return listUser;
     }
-    
-    public void invite(){
-        
+
+    public void invite() {
+
     }
-    
-//    public User getUser(){
-//        User u 
-//        return user;
-//    }
-//    
+
     class CompareUser implements Comparator<User> {
 
         @Override
