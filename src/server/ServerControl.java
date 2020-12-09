@@ -88,7 +88,7 @@ public class ServerControl implements Runnable {
                 } else {
                     try {
                         oos.writeObject(new Message(user, Message.MesType.LOGIN_SUCCESS));
-                        DataServer.mapSocket.put(user, clientSocket);
+                        DataServer.mapSocket.put(user, oos);
 //                        usersMapSocket.add(user);
 //                        System.out.println("da put vao map "+usersMapSocket.size());
                     } catch (IOException ex) {
@@ -133,7 +133,6 @@ public class ServerControl implements Runnable {
             }
 
             case INVITE_USER: {
-                System.out.println("moi:");
                 ArrayList<User> users2 = (ArrayList<User>) mesReceive.getObject();
 
                 User userMoi = users2.get(0);
@@ -145,25 +144,12 @@ public class ServerControl implements Runnable {
 //                System.out.println(usersMapSocket.size());
                 for (int i = 0; i < users.size(); i++) {
                     if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
-                        System.out.println(users.get(i).toString());
+//                        System.out.println(users.get(i).toString());
                         System.out.println("equal");
-                        try {
-                            oos.close();
-                            Socket cliSocket = DataServer.mapSocket.get(users.get(i));
-                            ObjectOutputStream oos1 = new ObjectOutputStream(cliSocket.getOutputStream());
-                            try {
-                                oos1.writeObject(new Message(userNhan, Message.MesType.INVITE_USER));
-                                System.out.println("da moi!");
-
-                            } catch (IOException ex) {
-                                Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            oos1.close();
-                            oos = new ObjectOutputStream(clientSocket.getOutputStream());
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
+                        Message mesSent =new  Message(users2, Message.MesType.INVITE_USER);
+                        DataServer.sendMessage(users.get(i), mesSent);
+                       
+                        break;
                     }
                 }
                 break;
@@ -171,24 +157,24 @@ public class ServerControl implements Runnable {
             case ACCEPT_REQUEST: {
                 ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
                 User userMoi = usersPlayGame.get(0);
+                System.out.println(userMoi.toString());
                 User userNhan = usersPlayGame.get(1);
+                System.out.println(userNhan.toString());
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
-                Game game = serverDao.insertGame();
+//                System.out.println(users);
+                System.out.println("users" + users.size());
+//                Game game = serverDao.insertGame();
+                Game game = new Game();
                 for (int i = 0; i < users.size(); i++) {
+                    System.out.println(users.get(i));
                     if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
-
-                        try {
-                            oos.writeObject(new Message(game, Message.MesType.START_GAME));
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                            System.out.println("aaa");
+                            DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
+//                            oos.writeObject(new Message(game, Message.MesType.START_GAME));
+                      
                     } else if (userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
-
-                        try {
-                            oos.writeObject(new Message(game, Message.MesType.START_GAME));
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        System.out.println("bbb");    
+                        DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
                     }
                 }
                 break;
