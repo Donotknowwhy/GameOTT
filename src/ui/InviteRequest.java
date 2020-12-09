@@ -18,7 +18,7 @@ public class InviteRequest extends javax.swing.JFrame {
      */
     public InviteRequest() {
         initComponents();
-        this.setLocation(583,255);
+        this.setLocationRelativeTo(null);
     }
     public void _dispose(){
         this.dispose();

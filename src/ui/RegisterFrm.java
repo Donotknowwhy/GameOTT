@@ -19,6 +19,7 @@ public class RegisterFrm extends javax.swing.JFrame {
      */
     public RegisterFrm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public void setAction(ActionListener al){
         btnRegister.addActionListener(al);
@@ -53,9 +54,9 @@ public class RegisterFrm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("username");
+        jLabel1.setText("Username");
 
-        jLabel2.setText("password");
+        jLabel2.setText("Password");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,7 +78,7 @@ public class RegisterFrm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
                         .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

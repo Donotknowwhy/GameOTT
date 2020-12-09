@@ -18,6 +18,7 @@ public class LoginFrm extends javax.swing.JFrame {
      */
     public LoginFrm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public void setAction(ActionListener al,ActionListener al1){
         btnLogin.addActionListener(al);
@@ -48,9 +49,9 @@ public class LoginFrm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("username");
+        jLabel1.setText("Username");
 
-        jLabel2.setText("password");
+        jLabel2.setText("Password");
 
         btnRegister.setText("Register");
 
