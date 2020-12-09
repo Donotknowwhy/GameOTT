@@ -5,7 +5,6 @@
  */
 package ui;
 
-import client.ClientControl;
 import java.awt.event.ActionListener;
 
 /**

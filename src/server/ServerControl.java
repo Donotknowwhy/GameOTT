@@ -14,8 +14,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
@@ -96,8 +94,6 @@ public class ServerControl implements Runnable {
                             
                             DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
                         }
-//                        usersMapSocket.add(user);
-//                        System.out.println("da put vao map "+usersMapSocket.size());
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -151,12 +147,8 @@ public class ServerControl implements Runnable {
                 User userMoi = users2.get(0);
                 User userNhan = users2.get(1);
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
-//                System.out.println("size"+users.size());
-//                System.out.println(usersMapSocket.size());
                 for (int i = 0; i < users.size(); i++) {
                     if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
-//                        System.out.println(users.get(i).toString());
-                        System.out.println("equal");
                         Message mesSent = new Message(users2, Message.MesType.INVITE_USER);
                         DataServer.sendMessage(users.get(i), mesSent);
 

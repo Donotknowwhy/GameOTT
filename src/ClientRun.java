@@ -19,7 +19,6 @@ public class ClientRun {
     public static void main(String[] args) {
         LoginFrm loginFrm = new LoginFrm();
         loginFrm.setVisible(true);
-//        RegisterFrm registerFrm = new RegisterFrm();
         ClientControl clientControl = new ClientControl();
         System.out.println(System.currentTimeMillis());
         clientControl.openConnection();
@@ -27,7 +26,6 @@ public class ClientRun {
         clientControl.startThreadRecei();
         LoginControl loginControl
                  = new LoginControl(loginFrm,clientControl);
-//        RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
         
     }
 }

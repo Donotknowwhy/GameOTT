@@ -28,7 +28,6 @@ public class ListFrm extends javax.swing.JFrame {
      */
     public ListFrm() {
         initComponents();
-//        model = (DefaultTableModel) tableList.getModel();
     }
     public void setActionM(ActionListener al1,ActionListener al){
         btnLogout.addActionListener(al1);
@@ -40,27 +39,6 @@ public class ListFrm extends javax.swing.JFrame {
     public void addRow(ArrayList<User> listUser) {
 
     }
-
-//        private void showUsersLowToHigh(ArrayList<User> users){
-//        DefaultTableModel dtm = (DefaultTableModel)tableList.getModel();
-//        dtm.getDataVector().removeAllElements();
-//        
-//        Collections.sort(users);        
-//        users.forEach(u -> {
-//            dtm.addRow(u.toObjects());
-//        });
-//    }
-//    
-//    private void showUserHighToLow(){
-//        DefaultTableModel dtm = (DefaultTableModel)tableList.getModel();
-//        dtm.getDataVector().removeAllElements();
-//        
-//        Collections.sort(users);   
-//        Collections.reverse(users);
-//        users.forEach(u -> {
-//            dtm.addRow(u.toObjects());
-//        });
-//    }
     public void showUsers(ArrayList<User> users) {
         DefaultTableModel dtm = (DefaultTableModel) tableList.getModel();
         dtm.getDataVector().removeAllElements();
@@ -74,13 +52,7 @@ public class ListFrm extends javax.swing.JFrame {
         System.out.println("---"+users.size());
         if (indexRow >= 0) {
             user = users.get(indexRow);
-//            System.out.println(users.get(indexRow).toString());
-//            int rank = user.getRank();
-//            Account acc = user.getAccount();
-//            int point = user.getPoint();           
-//            boolean status = user.isStatus();
         }
-//        System.out.println(user.toObjects());
         return user;
     }
 

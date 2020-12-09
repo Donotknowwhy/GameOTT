@@ -7,8 +7,6 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import model.Game;
 import model.Message;
@@ -46,6 +44,7 @@ public class InviteControl {
             User user = DataClient.getUserCurrent();
             user.setStatus(0);
             DataClient.setUserCurrent(user);
+            System.out.println(user.toString());
             Message message = new Message(user, Message.MesType.CHANGE_USER_STATUS);
             clientControl.sendData(message);
             listFrm._dispose();

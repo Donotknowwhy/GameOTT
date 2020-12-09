@@ -5,12 +5,8 @@
  */
 package ui;
 
-import client.ClientControl;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
-import model.Account;
-import model.Message;
 
 /**
  *

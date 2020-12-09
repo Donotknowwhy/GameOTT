@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -239,7 +238,6 @@ public class ServerDao {
             PreparedStatement pre = conn.prepareStatement(Usage.getAllUser);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                //u._point,u._status,a._username
                 int point = rs.getInt("u._point");
                 int statis = rs.getInt("u._status");
                 String username = rs.getString("a._username");

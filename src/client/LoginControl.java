@@ -11,13 +11,11 @@ package client;
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import model.Account;
 import model.Message;
 import model.User;
 import ui.ListFrm;
 import ui.LoginFrm;
-import ui.Rank;
 import ui.RegisterFrm;
 
 /**

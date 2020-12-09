@@ -12,17 +12,13 @@ package client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import model.Choice;
 import model.Message;
 import model.User;
-import ui.InviteRequest;
-import ui.LoginFrm;
 import utils.Usage;
 
 /**
@@ -158,7 +154,6 @@ public class ClientControl {
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
-//            return clientSocket;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -173,20 +168,6 @@ public class ClientControl {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//    public Message receiveData() {
-//        try {
-//            Object o = ois.readObject();
-//            if (o instanceof Message) {
-//                Message mesReceive = (Message) o;
-//                return mesReceive;
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
     Thread threadReceive;
 
     public void startThreadRecei() {
