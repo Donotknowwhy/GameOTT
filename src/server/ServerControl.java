@@ -181,6 +181,7 @@ public class ServerControl implements Runnable {
             }
             case SEND_CHOICE:{
                 Choice choice = (Choice) mesReceive.getObject();
+                System.out.println("choice" + choice.getUser().getId());
                 Game game = choice.getGame();
                 serverDao.insertChoice(choice);
                 ArrayList<Choice> listChoice = serverDao.getChoiceByIdGame(game.getId());
