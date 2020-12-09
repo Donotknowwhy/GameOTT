@@ -25,5 +25,5 @@ public interface Usage {
             + "where u._accid = a.id";
     public String updateUserPoint = "update tbluser set _point = _point + ? where id = ?";
     //update status
-    public String updateStatus = "update tbluser set _status = ? where _accid = ?";
+    public String updateStatus = "update tbluser set _status = ? where id = ?";
 }
