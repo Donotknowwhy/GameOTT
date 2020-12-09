@@ -9,6 +9,7 @@ package client;
  *
  * @author Admin
  */
+import com.sun.scenario.effect.InvertMask;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,9 +27,12 @@ import utils.Usage;
  * @author lamit
  */
 public class ClientControl {
+
     private LoginControl loginControl;
     private RegisterControl registerControl;
     private InviteControl inviteControl;
+    private InviteRequestControl inviteRequestControl;
+    private GameControl gameControl;
     private Socket clientSocket;
     private String serverHost;
     private int serverPort;
@@ -42,7 +46,7 @@ public class ClientControl {
         }
         return instance;
     }
-    
+
     public ClientControl() {
     }
 
@@ -69,7 +73,24 @@ public class ClientControl {
     public void setInviteControl(InviteControl inviteControl) {
         this.inviteControl = inviteControl;
     }
+
+    public InviteRequestControl getInviteRequestControl() {
+        return inviteRequestControl;
+    }
+
+    public void setInviteRequestControl(InviteRequestControl inviteRequestControl) {
+        this.inviteRequestControl = inviteRequestControl;
+    }
+
+    public GameControl getGameControl() {
+        return gameControl;
+    }
+
+    public void setGameControl(GameControl gameControl) {
+        this.gameControl = gameControl;
+    }
     
+
     public Socket openConnection() {
         serverHost = Usage.serverHost;
         System.out.println("open connection");
@@ -114,34 +135,44 @@ public class ClientControl {
         public void run() {
             try {
                 while (true) {
-                    Object o = ois.readObject();
+                    ObjectInputStream ois1 = new ObjectInputStream(clientSocket.getInputStream());
+                    Object o = ois1.readObject();
                     Message message = (Message) o;
-                    switch(message.getMesType()){
-                        case  LOGIN_FAIL:{
+                    switch (message.getMesType()) {
+                        case LOGIN_FAIL: {
                             loginControl.showMessageFail();
                             break;
                         }
-                        case LOGIN_SUCCESS:{
+                        case LOGIN_SUCCESS: {
                             loginControl.showMessageSuccess(message);
                             break;
                         }
-                        case REGISTER_FAIL:{
+                        case REGISTER_FAIL: {
                             registerControl.showMessageFail();
                             break;
                         }
-                        case REGISTER_SUCCESS:{
+                        case REGISTER_SUCCESS: {
                             registerControl.showMessageSuccess();
                             break;
                         }
-                        case LIST_FULL:{
+                        case LIST_FULL: {
                             inviteControl.showListUser(message);
                             break;
                         }
-                        default: break;
+                        case INVITE_USER: {
+                            inviteControl.showInviteRequest();
+                            break;
+                        }
+                        case START_GAME:{
+                            inviteControl.showGameConsole(message);
+                            break;
+                        }
+                        default:
+                            break;
                     }
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
-            }  catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,7 +181,8 @@ public class ClientControl {
             }
         }
     });
-    public void startThreadRecei(){
+
+    public void startThreadRecei() {
         threadReceive.start();
     }
 }

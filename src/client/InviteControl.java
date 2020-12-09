@@ -8,8 +8,11 @@ package client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import model.Game;
 import model.Message;
 import model.User;
+import ui.GameFrm;
+import ui.InviteRequest;
 import ui.ListFrm;
 
 /**
@@ -17,37 +20,53 @@ import ui.ListFrm;
  * @author Admin
  */
 public class InviteControl {
+
     private ArrayList<User> user = new ArrayList();
     private ListFrm listFrm;
     private ClientControl clientControl;
     private User userRecent;
-    public InviteControl(ClientControl clientControl,ListFrm listFrm) {
+
+    public InviteControl(ClientControl clientControl, ListFrm listFrm) {
         this.clientControl = clientControl;
         this.clientControl.setInviteControl(this);
         this.listFrm = listFrm;
         listFrm.setAction(new ButtonInvite());
     }
-    public void setUser(User user){
+
+    public void setUser(User user) {
         this.userRecent = user;
     }
-    
-    class ButtonInvite implements ActionListener{
+
+    class ButtonInvite implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             User u = listFrm.choseData(user);
             ArrayList<User> users1 = new ArrayList<>();
             users1.add(userRecent);
             users1.add(u);
-            if(u.isStatus() != false){
+            if (u.isStatus() != false) {
                 Message message = new Message(users1, Message.MesType.INVITE_USER);
                 clientControl.sendData(message);
-            }else{
+            } else {
                 listFrm.thongBao("tai khoan nay khong online!");
             }
         }
     }
-    public void showListUser(Message mesRei){
+
+    public void showListUser(Message mesRei) {
         user = (ArrayList<User>) mesRei.getObject();
         listFrm.showUsers(user);
+    }
+
+    public void showInviteRequest() {
+        InviteRequest inviteRequest = new InviteRequest();
+        inviteRequest.setVisible(true);
+    }
+
+    public void showGameConsole(Message mesRecei) {
+        GameFrm gameFrm = new GameFrm();
+        Game game = (Game) mesRecei.getObject();
+        GameControl gameControl = new GameControl(gameFrm, clientControl, game);
     }
 }
