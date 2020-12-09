@@ -57,6 +57,7 @@ public class ServerDao {
                 pre1.setBoolean(1, true);
                 pre1.setInt(2, id);
                 pre1.executeUpdate();
+                user.setId(id);
                 user.setAccount(acc);
                 user.setStatus(true);
                 return user;
