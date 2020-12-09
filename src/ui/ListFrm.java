@@ -180,7 +180,7 @@ public class ListFrm extends javax.swing.JFrame {
 
     private void btnInviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInviteActionPerformed
         // TODO add your handling code here:
-        new GameFrm().setVisible(true);
+//        new GameFrm().setVisible(true);
     }//GEN-LAST:event_btnInviteActionPerformed
 
     private void tableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableListMouseClicked

@@ -60,8 +60,11 @@ public class InviteControl {
     }
 
     public void showInviteRequest() {
+        
         InviteRequest inviteRequest = new InviteRequest();
         inviteRequest.setVisible(true);
+        InviteRequestControl inviteRequestControl
+                  = new InviteRequestControl(inviteRequest, clientControl, user);
     }
 
     public void showGameConsole(Message mesRecei) {

@@ -50,6 +50,50 @@ public class ClientControl {
     }
 
     public ClientControl() {
+        this.threadReceive = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        Object o = ois.readObject();
+                        Message message = (Message) o;
+                        switch (message.getMesType()) {
+                            case LOGIN_FAIL: {
+                                loginControl.showMessageFail();
+                                break;
+                            }
+                            case LOGIN_SUCCESS: {
+                                loginControl.showMessageSuccess(message);
+                                break;
+                            }
+                            case REGISTER_FAIL: {
+                                registerControl.showMessageFail();
+                                break;
+                            }
+                            case REGISTER_SUCCESS: {
+                                registerControl.showMessageSuccess();
+                                break;
+                            }
+                            case LIST_FULL: {
+                                inviteControl.showListUser(message);
+                                break;
+                            }
+                            case INVITE_USER: {
+                                inviteControl.showInviteRequest();
+                                break;
+                            }
+                            case START_GAME:{
+                                inviteControl.showGameConsole(message);
+                                break;
+                            }
+                        }
+                        Thread.sleep(1000);
+                    }
+                } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+                    Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     public LoginControl getLoginControl() {
@@ -98,7 +142,6 @@ public class ClientControl {
         System.out.println("open connection");
         serverPort = Usage.port;
         try {
-            System.out.println("///");
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
@@ -111,12 +154,12 @@ public class ClientControl {
 
     public void sendData(Message mesSend) {
         try {
+            
             oos.writeObject(mesSend);
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 //    public Message receiveData() {
 //        try {
 //            Object o = ois.readObject();
@@ -131,110 +174,9 @@ public class ClientControl {
 //        }
 //        return null;
 //    }
-    Thread threadReceive = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            try {
-                while (true) {
-                    Object o = ois.readObject();
-                    Message message = (Message) o;
-                    switch (message.getMesType()) {
-                        case LOGIN_FAIL: {
-                            loginControl.showMessageFail();
-                            break;
-                        }
-                        case LOGIN_SUCCESS: {
-                            loginControl.showMessageSuccess(message);
-                            break;
-                        }
-                        case REGISTER_FAIL: {
-                            registerControl.showMessageFail();
-                            break;
-                        }
-                        case REGISTER_SUCCESS: {
-                            registerControl.showMessageSuccess();
-                            break;
-                        }
-                        case LIST_FULL: {
-                            inviteControl.showListUser(message);
-                            break;
-                        }
-                        case INVITE_USER: {
-                            inviteControl.showInviteRequest();
-                            break;
-                        }
-                        case START_GAME:{
-                            inviteControl.showGameConsole(message);
-                            break;
-                        }
-                    }
-                    Thread.sleep(1000);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    });
+    Thread threadReceive;
 
     public void startThreadRecei() {
         threadReceive.start();
     }
-}
-
-class CheckMess extends Thread {
-
-    Message mesRecei;
-    private Socket socketNhanInvite;
-    ObjectInputStream ois;
-
-    public CheckMess(Socket socketNhanInvite, ObjectInputStream ois) {
-        this.socketNhanInvite = socketNhanInvite;
-        try {
-            this.ois = new ObjectInputStream(socketNhanInvite.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(this.ois);
-    }
-
-    public Message getMesRecei() {
-        return mesRecei;
-    }
-
-    public void setMesRecei(Message mesRecei) {
-        this.mesRecei = mesRecei;
-    }
-
-    @Override
-    public void run() {
-        Message message;
-
-        while (true) {
-            try {
-                Object o = ois.readObject();
-                if (o instanceof Message) {
-                    message = (Message) o;
-                    setMesRecei(message);
-                    if (message.getMesType() == Message.MesType.INVITE_USER) {
-                        InviteRequest inviteRequest = new InviteRequest();
-                        inviteRequest.setVisible(true);
-                    } else {
-
-                    }
-                }
-                Thread.sleep(1000);
-            } catch (IOException ex) {
-                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
 }

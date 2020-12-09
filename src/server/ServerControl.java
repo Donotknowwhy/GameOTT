@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
+import model.Game;
 import model.Message;
 import model.User;
 
@@ -150,10 +151,8 @@ public class ServerControl implements Runnable {
                     if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
                         System.out.println("eqail");
                         Socket cliSocket = DataServer.mapSocket.get(users.get(i));
-                        ObjectOutputStream oos1;
-                        try {
-                            oos1 = new ObjectOutputStream(cliSocket.getOutputStream());                           
-                            oos1.writeObject(new Message(userNhan,Message.MesType.INVITE_USER));
+                        try {                         
+                            oos.writeObject(new Message(userNhan,Message.MesType.INVITE_USER));
                             System.out.println("da moi!");
                             
                         } catch (IOException ex) {
@@ -163,18 +162,39 @@ public class ServerControl implements Runnable {
                 }
                 break;
             }
+            case ACCEPT_REQUEST:{
+                ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
+                User userMoi = usersPlayGame.get(0);
+                User userNhan = usersPlayGame.get(1);
+                ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                Game game = serverDao.insertGame(); 
+                for(int i= 0;i<users.size();i++){
+                    if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
+                                              
+                        try {                      
+                            oos.writeObject(new Message(game,Message.MesType.START_GAME));                          
+                        } catch (IOException ex) {
+                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
+                        }                       
+                    }
+                    else if(userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
+                                                     
+                        try {                         
+                            oos.writeObject(new Message(game,Message.MesType.START_GAME));                          
+                        } catch (IOException ex) {
+                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
+                        }                       
+                    }
+                }
+                break;
+            }
+            case DENY_REQUEST:{
+                break;
+            }
             
             default: break;
         }
     }
     
-    class inviteThread extends Thread{
-
-        @Override
-        public void run() {
-            
-        }
-        
-    }
 
 }
