@@ -196,7 +196,7 @@ public class ServerDao {
                         break;
                     }
                 }
-                Choice choice = new Choice(rs.getInt(0), user, game, choiceType, rs.getInt(5));
+                Choice choice = new Choice(rs.getInt(1), user, game, choiceType, rs.getInt(5));
                 listChoice.add(choice);
             }
         } catch (SQLException ex) {
