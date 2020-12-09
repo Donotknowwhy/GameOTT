@@ -122,13 +122,13 @@ public class GameFrm extends javax.swing.JFrame {
 
     public int getChoice (){
         int res = 1;
-        if(keo.hasFocus()){
+        if(keo.isSelected()){
             res = 1;
         }
-        else if(bua.hasFocus()){
+        else if(bua.isSelected()){
             res = 2;
         }
-        else if (bao.hasFocus()){
+        else if (bao.isSelected()){
            res = 3;
         }
         return res;
