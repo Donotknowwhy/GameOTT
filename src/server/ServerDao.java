@@ -184,11 +184,11 @@ public class ServerDao {
                 Choice.ChoiceType choiceType = Choice.ChoiceType.BUA;
                 switch (rs.getInt(4)) {
                     case 1: {
-                        choiceType = Choice.ChoiceType.KEO;
+                        choiceType = Choice.ChoiceType.BUA;
                         break;
                     }
                     case 2: {
-                        choiceType = Choice.ChoiceType.BUA;
+                        choiceType = Choice.ChoiceType.KEO;
                         break;
                     }
                     case 3: {
