@@ -3,20 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/model/Message.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/utils/Usage.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/ui/GameFrm.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/model/Choice.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/client/InviteControl.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/server/ServerControl.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/client/LoginControl.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/model/Game.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/model/Account.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/client/GameControl.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/client/ClientControl.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/ClientRun.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/client/RegisterControl.java</file>
-            <file>file:/C:/Users/lamit/Desktop/GameOTT/src/client/InviteRequestControl.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/server/MainThreadServer.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/server/ConnectDatabase.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/MainRun.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/server/ServerControl.java</file>
+            <file>file:/C:/Users/BVCN%2088/Documents/NetBeansProjects/GameOanTuTi/src/client/ClientControl.java</file>
         </group>
     </open-files>
 </project-private>
