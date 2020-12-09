@@ -76,6 +76,8 @@ public class ClientControl {
                             }
                             case REGISTER_SUCCESS: {
                                 registerControl.showMessageSuccess();
+                                User userCurrent = (User) message.getObject();
+                                DataClient.userCurrent = userCurrent;
                                 break;
                             }
                             case LIST_FULL: {

@@ -84,6 +84,8 @@ public class Message implements Serializable {
         LIST_FULL,
         LIST_NULL,
         //moi
-        INVITE_USER
+        INVITE_USER,
+        //status
+        CHANGE_USER_STATUS
     }
 }

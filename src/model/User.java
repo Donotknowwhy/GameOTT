@@ -21,7 +21,7 @@ public class User implements Serializable, Comparable<User>{
     private int id;
     private Account account;
     private int point;
-    private boolean status;
+    private int status;
     //another property
     private int rank;
     public User() {
@@ -33,27 +33,27 @@ public class User implements Serializable, Comparable<User>{
     
     
     
-    public User(Account account, int point, boolean status) {
+    public User(Account account, int point, int status) {
         this.account = account;
         this.point = point;
         this.status = status;
     }
     
-    public User(int id, Account account, int point, boolean status) {
+    public User(int id, Account account, int point, int status) {
         this.id = id;
         this.account = account;
         this.point = point;
         this.status = status;
     }
     
-    public User(int id, int point, boolean status) {
+    public User(int id, int point, int status) {
         this.id = id;
         this.point = point;
         this.status = status;
     }
     
 
-    public User(int point, boolean status) {
+    public User(int point, int status) {
         this.point = point;
         this.status = status;
     }
@@ -82,11 +82,11 @@ public class User implements Serializable, Comparable<User>{
         this.point = point;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -158,19 +158,24 @@ public class ServerControl implements Runnable {
             case ACCEPT_REQUEST: {
                 ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
                 User userMoi = usersPlayGame.get(0);
-                System.out.println(userMoi.toString());
                 User userNhan = usersPlayGame.get(1);
-                System.out.println(userNhan.toString());
+                userMoi.setStatus(0);
+                userNhan.setStatus(0);
+                serverDao.updateUserStatus(userMoi);
+                serverDao.updateUserStatus(userNhan);
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
-//                System.out.println(users);
+                for(int i = 0; i <users.size(); i++){
+                    ArrayList<User> us = serverDao.getUsers();
+                    DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
+                }
                 System.out.println("users" + users.size());
                 Game game = serverDao.insertGame();
                 for (int i = 0; i < users.size(); i++) {
                     System.out.println(users.get(i));
-                    if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
+                    if (userNhan.getId() == users.get(i).getId()) {
                             DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
                       
-                    } else if (userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {   
+                    } else if (userMoi.getId() == users.get(i).getId()) {   
                         DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
                     }
                 }
@@ -213,6 +218,16 @@ public class ServerControl implements Runnable {
                         
                         }
                     }
+                }
+                break;
+            }
+            case  CHANGE_USER_STATUS:{
+                User u = (User) mesReceive.getObject();
+                serverDao.updateUserStatus(u);
+                ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                for(int i = 0; i <users.size(); i++){
+                    ArrayList<User> us = serverDao.getUsers();
+                    DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
                 }
                 break;
             }

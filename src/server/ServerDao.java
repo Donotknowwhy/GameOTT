@@ -54,12 +54,12 @@ public class ServerDao {
             if (rs.next()) {
                 int id = rs.getInt("id");
                 PreparedStatement pre1 = conn.prepareStatement(Usage.updateStatus);
-                pre1.setBoolean(1, true);
+                pre1.setInt(1, 1);
                 pre1.setInt(2, id);
                 pre1.executeUpdate();
                 user.setId(id);
                 user.setAccount(acc);
-                user.setStatus(true);
+                user.setStatus(1);
                 return user;
             }
 
@@ -89,10 +89,9 @@ public class ServerDao {
                     lastRowId = rs1.getInt(1);
                 }
                 PreparedStatement pre1 = conn.prepareStatement(Usage.insertUser);
-                User user = new User(0, false);
                 pre1.setInt(1, lastRowId);
                 pre1.setInt(2, 0);
-                pre1.setBoolean(3, true);
+                pre1.setInt(3, 1);
                 pre1.executeUpdate();
                 isSuccess = true;
                 conn.commit();
@@ -224,6 +223,16 @@ public class ServerDao {
             Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void updateUserStatus(User user){
+        try {
+            PreparedStatement pre = conn.prepareStatement(Usage.updateStatus);
+            pre.setInt(1, user.isStatus());
+            pre.setInt(2, user.getId());
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public ArrayList<User> getAllUser() {
         ArrayList<User> listUser = new ArrayList<>();
         try {
@@ -232,9 +241,9 @@ public class ServerDao {
             while (rs.next()) {
                 //u._point,u._status,a._username
                 int point = rs.getInt("u._point");
-                boolean status = rs.getBoolean("u._status");
+                int statis = rs.getInt("u._status");
                 String username = rs.getString("a._username");
-                User user = new User(new Account(username), point, status);
+                User user = new User(new Account(username), point, 1);
                 listUser.add(user);
             }
             Collections.sort(listUser, new CompareUser());
@@ -265,7 +274,7 @@ public class ServerDao {
                 int point = rs.getInt("u._point");
                 boolean status = rs.getBoolean("u._status");
                 String username = rs.getString("a._username");
-                User user = new User(new Account(username), point, status);
+                User user = new User(new Account(username), point, 1);
                 listUser.add(user);
             }
             Collections.sort(listUser, new CompareUser());
@@ -284,10 +293,6 @@ public class ServerDao {
             }
         }
         return listUser;
-    }
-
-    public void invite() {
-
     }
 
     class CompareUser implements Comparator<User> {

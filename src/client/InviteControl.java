@@ -7,6 +7,8 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import model.Game;
 import model.Message;
@@ -30,13 +32,60 @@ public class InviteControl {
         this.clientControl = clientControl;
         this.clientControl.setInviteControl(this);
         this.listFrm = listFrm;
-        listFrm.setAction(new ButtonInvite());
+        listFrm.setActionM(new ButtonReload(),new ButtonInvite());
     }
 
     public void setUser(User user) {
         this.userRecent = user;
     }
+    class WindowClosing implements WindowListener{
 
+        @Override
+        public void windowOpened(WindowEvent we) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void windowClosing(WindowEvent we) {
+            DataClient.userCurrent.setStatus(-1);
+            Message message = new Message(DataClient.userCurrent, Message.MesType.CHANGE_USER_STATUS);
+            clientControl.sendData(message);
+        }
+
+        @Override
+        public void windowClosed(WindowEvent we) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void windowIconified(WindowEvent we) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent we) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void windowActivated(WindowEvent we) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent we) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    class ButtonReload implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
     class ButtonInvite implements ActionListener {
 
         @Override
@@ -47,7 +96,7 @@ public class InviteControl {
             users1.add(u);
             System.out.println(userRecent.toString());
             System.out.println(u.toString());
-            if (u.isStatus() != false) {
+            if (u.isStatus() != -1) {
                 Message message = new Message(users1, Message.MesType.INVITE_USER);
                 clientControl.sendData(message);
             } else {

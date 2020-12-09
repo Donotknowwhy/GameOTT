@@ -15,7 +15,6 @@ import java.util.Arrays;
 import model.Account;
 import model.Message;
 import model.User;
-import ui.Invite;
 import ui.ListFrm;
 import ui.LoginFrm;
 import ui.Rank;
