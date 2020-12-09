@@ -201,12 +201,13 @@ public class ServerControl implements Runnable {
                         choice2.setResult(2);
                     }
                     ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                    ArrayList<User> us = serverDao.getUsers();
                     for(int i = 0; i < users.size(); i++){
                         if(users.get(i).getId() == choice1.getUser().getId()){
-                            DataServer.sendMessage(users.get(i), new Message(choice1, Message.MesType.REPLY_RESULT));
+                            DataServer.sendMessage(users.get(i), new Message(choice1,us, Message.MesType.REPLY_RESULT));
                         }
                         if(users.get(i).getId() == choice2.getUser().getId()){
-                            DataServer.sendMessage(users.get(i), new Message(choice2, Message.MesType.REPLY_RESULT));
+                            DataServer.sendMessage(users.get(i), new Message(choice2,us, Message.MesType.REPLY_RESULT));
                         
                         }
                     }

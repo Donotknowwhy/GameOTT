@@ -134,7 +134,10 @@ public class GameFrm extends javax.swing.JFrame {
         return res;
     }
     public void showMessage(String content){
-        JOptionPane.showMessageDialog(this,content);
+        int result = JOptionPane.showConfirmDialog(this,content);
+        if(result == JOptionPane.YES_OPTION){
+            this.dispose();
+        }
     }
     /**
      * @param args the command line arguments

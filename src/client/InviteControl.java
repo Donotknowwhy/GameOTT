@@ -56,8 +56,8 @@ public class InviteControl {
         }
     }
 
-    public void showListUser(Message mesRei) {
-        user = (ArrayList<User>) mesRei.getObject();
+    public void showListUser(ArrayList<User> listUsers) {
+        user = listUsers;
         listFrm.showUsers(user);
     }
 

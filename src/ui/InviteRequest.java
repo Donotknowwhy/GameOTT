@@ -21,6 +21,9 @@ public class InviteRequest extends javax.swing.JFrame {
         initComponents();
         this.setLocation(583,255);
     }
+    public void _dispose(){
+        this.dispose();
+    }
     public void setAction(ActionListener al1, ActionListener al2){
         btnAccept.addActionListener(al1);
         btnReject.addActionListener(al2);

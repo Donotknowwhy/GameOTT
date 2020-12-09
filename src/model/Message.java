@@ -19,9 +19,16 @@ public class Message implements Serializable {
 
     private static final long serialVersionUID = 6529685098267757693L;
     private Object object;
+    private Object object2;
     private MesType mesType;
 
     public Message() {
+    }
+
+    public Message(Object object, Object object2, MesType mesType) {
+        this.object = object;
+        this.object2 = object2;
+        this.mesType = mesType;
     }
     
     public Message(Object object, MesType mesType) {
@@ -45,6 +52,14 @@ public class Message implements Serializable {
         this.mesType = mesType;
     }
 
+    public Object getObject2() {
+        return object2;
+    }
+
+    public void setObject2(Object object2) {
+        this.object2 = object2;
+    }
+    
     public static enum MesType {
         //login,register
         LOGIN,

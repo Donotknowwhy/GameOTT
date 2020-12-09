@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -78,7 +79,7 @@ public class ClientControl {
                                 break;
                             }
                             case LIST_FULL: {
-                                inviteControl.showListUser(message);
+                                inviteControl.showListUser((ArrayList<User>) message.getObject());
                                 break;
                             }
                             case INVITE_USER: {
@@ -91,6 +92,8 @@ public class ClientControl {
                             }
                             case REPLY_RESULT:{
                                 Choice choice = (Choice) message.getObject();
+                                ArrayList<User> listUs = (ArrayList<User>) message.getObject2();
+                                inviteControl.showListUser(listUs);
                                 gameControl.checkResult(choice);
                                 break;
                             }

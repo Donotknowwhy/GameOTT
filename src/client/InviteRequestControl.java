@@ -31,6 +31,7 @@ public class InviteRequestControl {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            inviteRequest._dispose();
             Message messages = new Message(users, Message.MesType.ACCEPT_REQUEST);
             clientControl.sendData(messages);
         }
@@ -40,6 +41,7 @@ public class InviteRequestControl {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            inviteRequest._dispose();
             Message messages = new Message(users, Message.MesType.DENY_REQUEST);
             clientControl.sendData(messages);
         }
