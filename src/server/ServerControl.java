@@ -238,10 +238,10 @@ public class ServerControl implements Runnable {
             case CHANGE_USER_STATUS: {
                 User u = (User) mesReceive.getObject();
                 serverDao.updateUserStatus(u);
+                System.out.println(u.toString());
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
                 ArrayList<User> us = serverDao.getUsers();
                 for (int i = 0; i < users.size(); i++) {
-                    
                     DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
                 }
                 break;

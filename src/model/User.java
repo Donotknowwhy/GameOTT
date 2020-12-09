@@ -99,7 +99,22 @@ public class User implements Serializable, Comparable<User>{
     }
     
     public Object[] toObjects(){
-        return new Object[]{rank,account.getUsername(),point,status};
+        String statusString = "";
+        switch(status){
+            case 1:{
+                statusString = "ONLINE";
+                break;
+            }
+            case 0:{
+                statusString = "OFFLINE";
+                break;
+            }
+            case 2:{
+                statusString = "BUSY";
+                break;
+            }
+        }
+        return new Object[]{rank,account.getUsername(),point,statusString};
     }
 
     @Override
