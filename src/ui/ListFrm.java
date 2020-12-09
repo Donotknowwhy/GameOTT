@@ -6,6 +6,7 @@
 package ui;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JOptionPane;
@@ -29,9 +30,10 @@ public class ListFrm extends javax.swing.JFrame {
         initComponents();
 //        model = (DefaultTableModel) tableList.getModel();
     }
-    public void setActionM(ActionListener al1,ActionListener al){
+    public void setActionM(ActionListener al1,ActionListener al,WindowListener wl){
         btnReload.addActionListener(al1);
         btnInvite.addActionListener(al);
+        this.addWindowListener(wl);
     }
     public void addRow(ArrayList<User> listUser) {
 
