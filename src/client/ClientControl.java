@@ -9,7 +9,6 @@ package client;
  *
  * @author Admin
  */
-import com.sun.scenario.effect.InvertMask;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -79,7 +78,7 @@ public class ClientControl {
                                 break;
                             }
                             case INVITE_USER: {
-                                inviteControl.showInviteRequest();
+                                inviteControl.showInviteRequest(message);
                                 break;
                             }
                             case START_GAME:{

@@ -61,8 +61,8 @@ public class InviteControl {
         listFrm.showUsers(user);
     }
 
-    public void showInviteRequest() {
-        
+    public void showInviteRequest(Message message) {
+        user = (ArrayList<User>) message.getObject();
         InviteRequest inviteRequest = new InviteRequest();
         inviteRequest.setVisible(true);
         InviteRequestControl inviteRequestControl
