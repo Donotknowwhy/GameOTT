@@ -32,7 +32,7 @@ public class InviteControl {
         this.clientControl = clientControl;
         this.clientControl.setInviteControl(this);
         this.listFrm = listFrm;
-        listFrm.setActionM(new ButtonReload(),new ButtonInvite());
+        listFrm.setActionM(new ButtonReload(),new ButtonInvite(), new WindowClosing());
     }
 
     public void setUser(User user) {
