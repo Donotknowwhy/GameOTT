@@ -67,7 +67,7 @@ public class ListFrm extends javax.swing.JFrame {
         System.out.println("---"+users.size());
         if (indexRow >= 0) {
             user = users.get(indexRow);
-            System.out.println(users.get(indexRow).toString());
+//            System.out.println(users.get(indexRow).toString());
 //            int rank = user.getRank();
 //            Account acc = user.getAccount();
 //            int point = user.getPoint();           

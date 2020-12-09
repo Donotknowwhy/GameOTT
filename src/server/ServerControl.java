@@ -143,14 +143,12 @@ public class ServerControl implements Runnable {
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
 //                System.out.println("size"+users.size());
 //                System.out.println(usersMapSocket.size());
-                for(int k = 0; k< users.size();k++){
-                    System.out.println("danh sach:");
-                    System.out.println(users.get(k).toString());
-                }
                 for(int i= 0;i<users.size();i++){
                     if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                        System.out.println("eqail");
+                        System.out.println(users.get(i));
+                        System.out.println("equal");
                         Socket cliSocket = DataServer.mapSocket.get(users.get(i));
+                        
                         try {                         
                             oos.writeObject(new Message(userNhan,Message.MesType.INVITE_USER));
                             System.out.println("da moi!");

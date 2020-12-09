@@ -45,6 +45,8 @@ public class InviteControl {
             ArrayList<User> users1 = new ArrayList<>();
             users1.add(userRecent);
             users1.add(u);
+            System.out.println(userRecent.toString());
+            System.out.println(u.toString());
             if (u.isStatus() != false) {
                 Message message = new Message(users1, Message.MesType.INVITE_USER);
                 clientControl.sendData(message);

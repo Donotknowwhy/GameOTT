@@ -50,7 +50,6 @@ public class LoginControl {
             account.setPassword(password);
             Message mesSend = new Message(account, Message.MesType.LOGIN);
             clientControl.sendData(mesSend);
-//            mesRecei = clientControl.receiveData();
         }
     }
 
