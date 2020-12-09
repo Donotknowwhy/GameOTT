@@ -24,7 +24,7 @@ public class GameControl {
         this.clientControl = clientControl;
         this.clientControl.setGameControl(this);
         this.gameFrm = gameFrm;
-        this.gameFrm.setAction(new ButtonSubmit());
+        this.gameFrm.setActionM(new ButtonSubmit());
         this.game = game;
         
     }

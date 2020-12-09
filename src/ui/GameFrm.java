@@ -20,7 +20,7 @@ public class GameFrm extends javax.swing.JFrame {
     public GameFrm() {
         initComponents();
     }
-    public void setAction(ActionListener al1){
+    public void setActionM(ActionListener al1){
         btnsubmit.addActionListener(al1);
     }
 
