@@ -26,6 +26,7 @@ public class GameControl {
         this.gameFrm = gameFrm;
         this.gameFrm.setVisible(true);
         this.game = game;
+        this.gameFrm.setAction(new ButtonSubmit());
     }
     class ButtonSubmit implements ActionListener{
 
@@ -52,7 +53,9 @@ public class GameControl {
             Message mesSend = new Message(choice, Message.MesType.SEND_CHOICE);
             clientControl.sendData(mesSend);
         }
-        public void checkResult(Choice choice){
+       
+    }
+     public void checkResult(Choice choice){
             if(choice.getResult()==1){
                 gameFrm.showMessage("Draw");
             }else if(choice.getResult()==2){
@@ -61,6 +64,4 @@ public class GameControl {
                 gameFrm.showMessage("Lose");
             }
         }
-    }
-    
 }

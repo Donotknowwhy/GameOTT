@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import model.Choice;
 import model.Message;
 import model.User;
 import ui.InviteRequest;
@@ -86,6 +87,11 @@ public class ClientControl {
                             }
                             case START_GAME:{
                                 inviteControl.showGameConsole(message);
+                                break;
+                            }
+                            case REPLY_RESULT:{
+                                Choice choice = (Choice) message.getObject();
+                                gameControl.checkResult(choice);
                                 break;
                             }
                         }
