@@ -110,7 +110,7 @@ public class ServerDao{
         try {
             PreparedStatement pre = conn.prepareStatement(Usage.insertGame, Statement.RETURN_GENERATED_KEYS);
             Date date = new Date();
-            pre.setObject(1, date.toInstant().atZone(ZoneId.of("Vietnam")).toLocalDate());
+            pre.setDate(1, new java.sql.Date(date.getTime()));
             //get id has just inserted 
             pre.executeUpdate();
             ResultSet resultGetGenerateKey = pre.getGeneratedKeys();

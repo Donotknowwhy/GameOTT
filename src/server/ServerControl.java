@@ -163,8 +163,8 @@ public class ServerControl implements Runnable {
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
 //                System.out.println(users);
                 System.out.println("users" + users.size());
-//                Game game = serverDao.insertGame();
-                Game game = new Game();
+                Game game = serverDao.insertGame();
+//                Game game = new Game();
                 for (int i = 0; i < users.size(); i++) {
                     System.out.println(users.get(i));
                     if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
