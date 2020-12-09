@@ -200,6 +200,8 @@ public class ServerControl implements Runnable {
                         choice1.setResult(0);
                         choice2.setResult(2);
                     }
+                    serverDao.updateUserPoint(choice1);
+                    serverDao.updateUserPoint(choice2);
                     ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
                     ArrayList<User> us = serverDao.getUsers();
                     for(int i = 0; i < users.size(); i++){
