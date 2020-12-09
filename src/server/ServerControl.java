@@ -150,8 +150,6 @@ public class ServerControl implements Runnable {
 
                 User userMoi = users2.get(0);
                 User userNhan = users2.get(1);
-                System.out.println("u1: " + userMoi.toString());
-                System.out.println("u nhan: " + userNhan.toString());
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
 //                System.out.println("size"+users.size());
 //                System.out.println(usersMapSocket.size());
@@ -171,8 +169,8 @@ public class ServerControl implements Runnable {
                 ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
                 User userMoi = usersPlayGame.get(0);
                 User userNhan = usersPlayGame.get(1);
-                userMoi.setStatus(0);
-                userNhan.setStatus(0);
+                userMoi.setStatus(2);
+                userNhan.setStatus(2);
                 serverDao.updateUserStatus(userMoi);
                 serverDao.updateUserStatus(userNhan);
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
@@ -218,6 +216,9 @@ public class ServerControl implements Runnable {
                         choice1.setResult(0);
                         choice2.setResult(2);
                     }
+                    choice1.getUser().setStatus(1);
+                    choice2.getUser().setStatus(1);
+                    serverDao.updateUserStatus(choice1.getUser());
                     serverDao.updateUserPoint(choice1);
                     serverDao.updateUserPoint(choice2);
                     ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());

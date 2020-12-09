@@ -46,8 +46,7 @@ public class InviteControl {
 
         @Override
         public void windowClosing(WindowEvent we) {
-            System.out.println("closing");
-            DataClient.userCurrent.setStatus(-1);
+            DataClient.userCurrent.setStatus(0);
             Message message = new Message(DataClient.userCurrent, Message.MesType.CHANGE_USER_STATUS);
             clientControl.sendData(message);
         }
