@@ -35,7 +35,7 @@ public class ServerControl implements Runnable {
     ObjectInputStream ois;
     ObjectOutputStream oos;
     ServerDao serverDao;
-    
+
     public ServerControl(Socket socket) {
         this.serverDao = new ServerDao();
         this.clientSocket = socket;
@@ -114,9 +114,9 @@ public class ServerControl implements Runnable {
                 }
                 break;
             }
-            case GET_SCOREBOARD:{
+            case GET_SCOREBOARD: {
                 ArrayList<User> us = serverDao.getUsers();
-                if(us != null){
+                if (us != null) {
                     try {
                         oos.writeObject(new Message(us, Message.MesType.LIST_FULL));
                     } catch (IOException ex) {
@@ -131,11 +131,11 @@ public class ServerControl implements Runnable {
                 }
                 break;
             }
-            
-            case INVITE_USER:{
+
+            case INVITE_USER: {
                 System.out.println("moi:");
                 ArrayList<User> users2 = (ArrayList<User>) mesReceive.getObject();
-                
+
                 User userMoi = users2.get(0);
                 User userNhan = users2.get(1);
                 System.out.println("u1: " + userMoi.toString());
@@ -143,56 +143,63 @@ public class ServerControl implements Runnable {
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
 //                System.out.println("size"+users.size());
 //                System.out.println(usersMapSocket.size());
-                for(int i= 0;i<users.size();i++){
-                    if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                        System.out.println(users.get(i));
+                for (int i = 0; i < users.size(); i++) {
+                    if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
+                        System.out.println(users.get(i).toString());
                         System.out.println("equal");
-                        Socket cliSocket = DataServer.mapSocket.get(users.get(i));
-                        
-                        try {                         
-                            oos.writeObject(new Message(userNhan,Message.MesType.INVITE_USER));
-                            System.out.println("da moi!");
-                            
+                        try {
+                            oos.close();
+                            Socket cliSocket = DataServer.mapSocket.get(users.get(i));
+                            ObjectOutputStream oos1 = new ObjectOutputStream(cliSocket.getOutputStream());
+                            try {
+                                oos1.writeObject(new Message(userNhan, Message.MesType.INVITE_USER));
+                                System.out.println("da moi!");
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            oos1.close();
+                            oos = new ObjectOutputStream(clientSocket.getOutputStream());
                         } catch (IOException ex) {
                             Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }                       
+                        }
+
                     }
                 }
                 break;
             }
-            case ACCEPT_REQUEST:{
+            case ACCEPT_REQUEST: {
                 ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
                 User userMoi = usersPlayGame.get(0);
                 User userNhan = usersPlayGame.get(1);
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
-                Game game = serverDao.insertGame(); 
-                for(int i= 0;i<users.size();i++){
-                    if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                                              
-                        try {                      
-                            oos.writeObject(new Message(game,Message.MesType.START_GAME));                          
+                Game game = serverDao.insertGame();
+                for (int i = 0; i < users.size(); i++) {
+                    if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
+
+                        try {
+                            oos.writeObject(new Message(game, Message.MesType.START_GAME));
                         } catch (IOException ex) {
                             Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }                       
-                    }
-                    else if(userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                                                     
-                        try {                         
-                            oos.writeObject(new Message(game,Message.MesType.START_GAME));                          
+                        }
+                    } else if (userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
+
+                        try {
+                            oos.writeObject(new Message(game, Message.MesType.START_GAME));
                         } catch (IOException ex) {
                             Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }                       
+                        }
                     }
                 }
                 break;
             }
-            case DENY_REQUEST:{
+            case DENY_REQUEST: {
                 break;
             }
-            
-            default: break;
+
+            default:
+                break;
         }
     }
-    
 
 }
