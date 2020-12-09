@@ -24,9 +24,9 @@ public class GameControl {
         this.clientControl = clientControl;
         this.clientControl.setGameControl(this);
         this.gameFrm = gameFrm;
-        this.gameFrm.setVisible(true);
-        this.game = game;
         this.gameFrm.setAction(new ButtonSubmit());
+        this.game = game;
+        
     }
     class ButtonSubmit implements ActionListener{
 
@@ -56,12 +56,16 @@ public class GameControl {
        
     }
      public void checkResult(Choice choice){
-            if(choice.getResult()==1){
+        switch (choice.getResult()) {
+            case 1:
                 gameFrm.showMessage("Draw");
-            }else if(choice.getResult()==2){
+                break;
+            case 2:
                 gameFrm.showMessage("Win");
-            }else{
+                break;
+            default:
                 gameFrm.showMessage("Lose");
-            }
+                break;
+        }
         }
 }

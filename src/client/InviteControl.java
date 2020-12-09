@@ -71,6 +71,7 @@ public class InviteControl {
 
     public void showGameConsole(Message mesRecei) {
         GameFrm gameFrm = new GameFrm();
+        gameFrm.setVisible(true);
         Game game = (Game) mesRecei.getObject();
         GameControl gameControl = new GameControl(gameFrm, clientControl, game);
     }
