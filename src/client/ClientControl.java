@@ -13,6 +13,7 @@ import com.sun.scenario.effect.InvertMask;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,11 +34,12 @@ public class ClientControl {
     private InviteControl inviteControl;
     private InviteRequestControl inviteRequestControl;
     private GameControl gameControl;
-    private Socket clientSocket;
+    private Socket clientSocket = new Socket();
     private String serverHost;
     private int serverPort;
     ObjectInputStream ois;
     ObjectOutputStream oos;
+    ObjectInputStream ois1;
     private static ClientControl instance = null;
 
     public static ClientControl getInstance() {
@@ -96,14 +98,13 @@ public class ClientControl {
         System.out.println("open connection");
         serverPort = Usage.port;
         try {
-
+            System.out.println("///");
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
-            System.out.println(ois);
-            return clientSocket;
-        } catch (IOException ex) {
-            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+//            return clientSocket;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return null;
     }
@@ -135,8 +136,7 @@ public class ClientControl {
         public void run() {
             try {
                 while (true) {
-                    ObjectInputStream ois1 = new ObjectInputStream(clientSocket.getInputStream());
-                    Object o = ois1.readObject();
+                    Object o = ois.readObject();
                     Message message = (Message) o;
                     switch (message.getMesType()) {
                         case LOGIN_FAIL: {
@@ -167,10 +167,8 @@ public class ClientControl {
                             inviteControl.showGameConsole(message);
                             break;
                         }
-                        default:
-                            break;
                     }
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
