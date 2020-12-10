@@ -185,6 +185,16 @@ public class ServerControl implements Runnable {
                 break;
             }
             case DENY_REQUEST: {
+                ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
+                User userMoi = usersPlayGame.get(0);
+                User userNhan = usersPlayGame.get(1);
+                ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                for (int i = 0; i < users.size(); i++) {
+                    System.out.println(users.get(i));
+                    if (userMoi.getId() == users.get(i).getId()) {
+                        DataServer.sendMessage(users.get(i), new Message(users, Message.MesType.DO_NOT_PLAY));
+                    }
+                }
                 break;
             }
             case SEND_CHOICE: {

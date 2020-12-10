@@ -67,7 +67,7 @@ public class InviteControl {
                 Message message = new Message(users1, Message.MesType.INVITE_USER);
                 clientControl.sendData(message);
             } else {
-                listFrm.thongBao("tai khoan nay khong online!");
+                listFrm.showMessage("tai khoan nay khong online!");
             }
         }
     }
@@ -76,7 +76,9 @@ public class InviteControl {
         user = listUsers;
         listFrm.showUsers(user);
     }
-
+    public void showMessageRejectGame(){
+        listFrm.showMessage("Nguoi ban moi khong xac nhan choi!!!");
+    }
     public void showInviteRequest(Message message) {
         user = (ArrayList<User>) message.getObject();
         InviteRequest inviteRequest = new InviteRequest();

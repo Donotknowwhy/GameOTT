@@ -84,6 +84,10 @@ public class ClientControl {
                                 inviteControl.showInviteRequest(message);
                                 break;
                             }
+                            case DO_NOT_PLAY:{
+                                inviteControl.showMessageRejectGame();
+                                break;
+                            }
                             case START_GAME:{
                                 inviteControl.showGameConsole(message);
                                 break;

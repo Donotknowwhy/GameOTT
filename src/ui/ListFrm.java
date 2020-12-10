@@ -58,7 +58,7 @@ public class ListFrm extends javax.swing.JFrame {
     }
 
 
-    public void thongBao(String f) {
+    public void showMessage(String f) {
         JOptionPane.showMessageDialog(this, f);
     }
 

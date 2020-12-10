@@ -72,6 +72,7 @@ public class Message implements Serializable {
         REQUEST_PLAY,
         ACCEPT_REQUEST,
         DENY_REQUEST,
+        DO_NOT_PLAY,
         //choi game
         START_GAME,
         SEND_CHOICE,
