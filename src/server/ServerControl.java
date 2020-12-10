@@ -49,9 +49,7 @@ public class ServerControl implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("0");
             while (!Thread.currentThread().isInterrupted()) {
-                System.out.println("1");
                 Object o = ois.readObject();
                 if (o instanceof Message) {
                     Message mesReceive = (Message) o;
