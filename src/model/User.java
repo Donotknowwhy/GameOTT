@@ -129,9 +129,9 @@ public class User implements Serializable, Comparable<User>{
         if (point == o.point)
             return 0;
         else if (point > o.point)
-            return 1;
-	else
             return -1;
+	else
+            return 1;
     }
 
 
