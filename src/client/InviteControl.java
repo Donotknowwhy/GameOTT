@@ -43,6 +43,7 @@ public class InviteControl {
             System.out.println("click");
             User user = DataClient.getUserCurrent();
             user.setStatus(0);
+            System.out.println(user.toString());
             DataClient.setUserCurrent(user);
             System.out.println(user.toString());
             Message message = new Message(user, Message.MesType.CHANGE_USER_STATUS);

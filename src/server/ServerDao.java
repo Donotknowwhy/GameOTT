@@ -271,9 +271,9 @@ public class ServerDao {
                 //u._point,u._status,a._username
                 int id = rs.getInt("u.id");
                 int point = rs.getInt("u._point");
-                boolean status = rs.getBoolean("u._status");
+                int status = rs.getInt("u._status");
                 String username = rs.getString("a._username");
-                User user = new User(id,new Account(username), point, 1);
+                User user = new User(id,new Account(username), point, status);
                 listUser.add(user);
             }
             Collections.sort(listUser, new CompareUser());

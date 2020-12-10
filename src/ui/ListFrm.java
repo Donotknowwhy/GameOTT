@@ -44,6 +44,7 @@ public class ListFrm extends javax.swing.JFrame {
         DefaultTableModel dtm = (DefaultTableModel) tableList.getModel();
         dtm.getDataVector().removeAllElements();
         users.forEach(u -> {
+            System.out.println(u.toString());
             dtm.addRow(u.toObjects());
         });
     }
