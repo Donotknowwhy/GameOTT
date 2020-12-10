@@ -100,7 +100,7 @@ public class ClientControl {
                                 break;
                             }
                         }
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     }
                 } catch (IOException | ClassNotFoundException | InterruptedException ex) {
                     Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
