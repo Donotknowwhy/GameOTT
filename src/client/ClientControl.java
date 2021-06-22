@@ -174,7 +174,7 @@ public class ClientControl {
     }
     Thread threadReceive;
 
-    public void startThreadRecei() {
+  public void startThreadRecei() {
         threadReceive.start();
     }
 }
