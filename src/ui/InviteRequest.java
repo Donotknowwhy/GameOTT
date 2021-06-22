@@ -18,7 +18,10 @@ public class InviteRequest extends javax.swing.JFrame {
      */
     public InviteRequest() {
         initComponents();
-        this.setLocation(583,255);
+        this.setLocationRelativeTo(null);
+    }
+    public void _dispose(){
+        this.dispose();
     }
     public void setAction(ActionListener al1, ActionListener al2){
         btnAccept.addActionListener(al1);
@@ -43,14 +46,16 @@ public class InviteRequest extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
-
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Người chơi: ");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("đã mời bạn !");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Chấp nhận chơi?");
 
+        btnAccept.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnAccept.setText("Chấp nhận");
         btnAccept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,6 +63,7 @@ public class InviteRequest extends javax.swing.JFrame {
             }
         });
 
+        btnReject.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnReject.setText("Từ chối");
         btnReject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,9 +90,9 @@ public class InviteRequest extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(btnAccept)
-                        .addGap(49, 49, 49)
+                        .addGap(56, 56, 56)
                         .addComponent(btnReject)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +108,7 @@ public class InviteRequest extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAccept)
                     .addComponent(btnReject))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,7 +135,7 @@ public class InviteRequest extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRejectActionPerformed
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccept;
     private javax.swing.JButton btnReject;

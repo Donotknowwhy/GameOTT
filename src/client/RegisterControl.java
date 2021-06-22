@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.Account;
 import model.Message;
+import model.User;
+import ui.ListFrm;
+import ui.LoginFrm;
 import ui.RegisterFrm;
 
 /**
@@ -20,10 +23,14 @@ import ui.RegisterFrm;
  * @author BENH VIEN CONG NGHE
  */
 public class RegisterControl {
+    Account account = new Account();
+    Message mesRecei = new Message();
+    private ListFrm listFrm;
     private RegisterFrm registerFrm;
     private ClientControl clientControl;
     public RegisterControl(RegisterFrm registerFrm, ClientControl clientControl){
         this.clientControl = clientControl;
+        this.clientControl.setRegisterControl(this);
         this.registerFrm = registerFrm;
         this.registerFrm.setVisible(true);
         this.registerFrm.setAction(new ButtonListener());
@@ -37,13 +44,19 @@ public class RegisterControl {
             Account account = new Account(username, password);
             Message mesSend = new Message(account, Message.MesType.REGISTER);
             clientControl.sendData(mesSend);
-            Message mesRecei = clientControl.receiveData();
-            if(mesRecei.getMesType() == Message.MesType.REGISTER_FAIL){
-                registerFrm.showMessage("Register Fail");
-            }else if(mesRecei.getMesType() == Message.MesType.REGISTER_SUCCESS){
-                registerFrm.showMessage("Register Success");
-            }
         }
         
+    }
+    public void showMessageFail(){
+        registerFrm.showMessage("Register Fail");
+    }
+    public void showMessageSuccess(){
+        registerFrm.showMessage("Register Success");
+        Message mesReq = new Message(account, Message.MesType.GET_SCOREBOARD);
+        clientControl.sendData(mesReq);
+        listFrm = new ListFrm();
+        InviteControl inviteControl = new InviteControl(clientControl, listFrm);
+        inviteControl.setUser((User) mesRecei.getObject());
+        listFrm.setVisible(true);
     }
 }

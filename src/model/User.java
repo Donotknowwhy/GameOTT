@@ -21,33 +21,39 @@ public class User implements Serializable, Comparable<User>{
     private int id;
     private Account account;
     private int point;
-    private boolean status;
+    private int status;
     //another property
     private int rank;
     public User() {
     }
+
+    public User(int id) {
+        this.id = id;
+    }
     
-    public User(Account account, int point, boolean status) {
+    
+    
+    public User(Account account, int point, int status) {
         this.account = account;
         this.point = point;
         this.status = status;
     }
     
-    public User(int id, Account account, int point, boolean status) {
+    public User(int id, Account account, int point, int status) {
         this.id = id;
         this.account = account;
         this.point = point;
         this.status = status;
     }
     
-    public User(int id, int point, boolean status) {
+    public User(int id, int point, int status) {
         this.id = id;
         this.point = point;
         this.status = status;
     }
     
 
-    public User(int point, boolean status) {
+    public User(int point, int status) {
         this.point = point;
         this.status = status;
     }
@@ -76,11 +82,11 @@ public class User implements Serializable, Comparable<User>{
         this.point = point;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -93,7 +99,22 @@ public class User implements Serializable, Comparable<User>{
     }
     
     public Object[] toObjects(){
-        return new Object[]{rank,account.getUsername(),point,status};
+        String statusString = "";
+        switch(status){
+            case 1:{
+                statusString = "ONLINE";
+                break;
+            }
+            case 0:{
+                statusString = "OFFLINE";
+                break;
+            }
+            case 2:{
+                statusString = "BUSY";
+                break;
+            }
+        }
+        return new Object[]{rank,account.getUsername(),point,statusString};
     }
 
     @Override
@@ -108,9 +129,9 @@ public class User implements Serializable, Comparable<User>{
         if (point == o.point)
             return 0;
         else if (point > o.point)
-            return 1;
-	else
             return -1;
+	else
+            return 1;
     }
 
 

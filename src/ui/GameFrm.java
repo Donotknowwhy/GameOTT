@@ -5,7 +5,8 @@
  */
 package ui;
 
-import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +18,10 @@ public class GameFrm extends javax.swing.JFrame {
      */
     public GameFrm() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    public void setActionM(ActionListener al1){
+        btnsubmit.addActionListener(al1);
     }
 
     /**
@@ -34,7 +39,7 @@ public class GameFrm extends javax.swing.JFrame {
         bao = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        submit = new javax.swing.JButton();
+        btnsubmit = new javax.swing.JButton();
         out = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,13 +54,17 @@ public class GameFrm extends javax.swing.JFrame {
         buttonGroup.add(bao);
         bao.setText("Bao");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setText("GAME OAN TU TI");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Lựa chọn của bạn:");
 
-        submit.setText("Submit");
+        btnsubmit.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnsubmit.setText("Submit");
 
-        out.setText("out");
+        out.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        out.setText("Out");
         out.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 outActionPerformed(evt);
@@ -66,45 +75,46 @@ public class GameFrm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(out)
+                .addGap(83, 83, 83))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(106, 106, 106)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bao)
-                            .addComponent(bua)
-                            .addComponent(keo)
+                            .addComponent(bao, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(submit))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bua, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(keo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(153, 153, 153)
+                                .addComponent(btnsubmit))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
+                        .addGap(237, 237, 237)
                         .addComponent(jLabel1)))
-                .addContainerGap(326, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(out)
-                .addGap(84, 84, 84))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addGap(43, 43, 43)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(keo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(submit))
-                .addGap(18, 18, 18)
-                .addComponent(keo)
-                .addGap(18, 18, 18)
-                .addComponent(bua)
-                .addGap(18, 18, 18)
-                .addComponent(bao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                    .addComponent(bua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnsubmit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bao, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
                 .addComponent(out)
-                .addGap(26, 26, 26))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,16 +127,22 @@ public class GameFrm extends javax.swing.JFrame {
 
     public int getChoice (){
         int res = 1;
-        if(keo.hasFocus()){
+        if(keo.isSelected()){
             res = 1;
         }
-        else if(bua.hasFocus()){
+        else if(bua.isSelected()){
             res = 2;
         }
-        else if (bao.hasFocus()){
+        else if (bao.isSelected()){
            res = 3;
         }
         return res;
+    }
+    public void showMessage(String content){
+        int result = JOptionPane.showConfirmDialog(this,content);
+        if(result == JOptionPane.YES_OPTION){
+            this.dispose();
+        }
     }
     /**
      * @param args the command line arguments
@@ -166,12 +182,12 @@ public class GameFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton bao;
+    private javax.swing.JButton btnsubmit;
     private javax.swing.JRadioButton bua;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton keo;
     private javax.swing.JButton out;
-    private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
 }

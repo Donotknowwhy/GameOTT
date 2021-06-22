@@ -14,11 +14,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
+import model.Choice;
 import model.Game;
 import model.Message;
 import model.User;
@@ -35,7 +34,7 @@ public class ServerControl implements Runnable {
     ObjectInputStream ois;
     ObjectOutputStream oos;
     ServerDao serverDao;
-    
+
     public ServerControl(Socket socket) {
         this.serverDao = new ServerDao();
         this.clientSocket = socket;
@@ -50,9 +49,7 @@ public class ServerControl implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("0");
             while (!Thread.currentThread().isInterrupted()) {
-                System.out.println("1");
                 Object o = ois.readObject();
                 if (o instanceof Message) {
                     Message mesReceive = (Message) o;
@@ -88,9 +85,13 @@ public class ServerControl implements Runnable {
                 } else {
                     try {
                         oos.writeObject(new Message(user, Message.MesType.LOGIN_SUCCESS));
-                        DataServer.mapSocket.put(user, clientSocket);
-//                        usersMapSocket.add(user);
-//                        System.out.println("da put vao map "+usersMapSocket.size());
+                        DataServer.mapSocket.put(user, oos);
+                        ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                        ArrayList<User> us = serverDao.getUsers();
+                        for (int i = 0; i < users.size(); i++) {
+                            
+                            DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
+                        }
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -108,17 +109,23 @@ public class ServerControl implements Runnable {
                 } else {
                     try {
                         oos.writeObject(new Message(isRegisterSuccess, Message.MesType.REGISTER_SUCCESS));
+                        ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                        ArrayList<User> us = serverDao.getUsers();
+                        for (int i = 0; i < users.size(); i++) {
+                            
+                            DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
+                        }
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 break;
             }
-            case GET_SCOREBOARD:{
+            case GET_SCOREBOARD: {
                 ArrayList<User> us = serverDao.getUsers();
-                if(us != null){
+                if (us != null) {
                     try {
-                        oos.writeObject(new Message(us, Message.MesType.lIST_FULL));
+                        oos.writeObject(new Message(us, Message.MesType.LIST_FULL));
                     } catch (IOException ex) {
                         Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -131,89 +138,117 @@ public class ServerControl implements Runnable {
                 }
                 break;
             }
-            
-            case INVITE_USER:{
-                System.out.println("moi:");
+
+            case INVITE_USER: {
                 ArrayList<User> users2 = (ArrayList<User>) mesReceive.getObject();
-                
+
                 User userMoi = users2.get(0);
                 User userNhan = users2.get(1);
-                System.out.println("u1: " + userMoi.toString());
-                System.out.println("u nhan: " + userNhan.toString());
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
-//                System.out.println("size"+users.size());
-//                System.out.println(usersMapSocket.size());
-                for(int k = 0; k< users.size();k++){
-                    System.out.println("danh sach:");
-                    System.out.println(users.get(k).toString());
-                }
-                for(int i= 0;i<users.size();i++){
-                    if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                        System.out.println("eqail");
-                        Socket cliSocket = DataServer.mapSocket.get(users.get(i));
-                        ObjectOutputStream oos1;
-                        try {
-                            oos1 = new ObjectOutputStream(cliSocket.getOutputStream());                           
-                            oos1.writeObject(new Message(users2,Message.MesType.INVITE_USER));
-                            System.out.println("da moi!");
-                            
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }                       
+                for (int i = 0; i < users.size(); i++) {
+                    if (userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())) {
+                        Message mesSent = new Message(users2, Message.MesType.INVITE_USER);
+                        DataServer.sendMessage(users.get(i), mesSent);
+
+                        break;
                     }
                 }
                 break;
             }
-            
-            case ACCEPT_REQUEST:{
-                System.out.println("chap nhan game;");
+            case ACCEPT_REQUEST: {
+                ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
+                User userMoi = usersPlayGame.get(0);
+                User userNhan = usersPlayGame.get(1);
+                userMoi.setStatus(2);
+                userNhan.setStatus(2);
+                serverDao.updateUserStatus(userMoi);
+                serverDao.updateUserStatus(userNhan);
+                ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                ArrayList<User> us = serverDao.getUsers();
+                for (int i = 0; i < users.size(); i++) {
+                    
+                    DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
+                }
+                System.out.println("users" + users.size());
+                Game game = serverDao.insertGame();
+                for (int i = 0; i < users.size(); i++) {
+                    System.out.println(users.get(i));
+                    if (userNhan.getId() == users.get(i).getId()) {
+                        DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
+
+                    } else if (userMoi.getId() == users.get(i).getId()) {
+                        DataServer.sendMessage(users.get(i), new Message(game, Message.MesType.START_GAME));
+                    }
+                }
+                break;
+            }
+            case DENY_REQUEST: {
                 ArrayList<User> usersPlayGame = (ArrayList<User>) mesReceive.getObject();
                 User userMoi = usersPlayGame.get(0);
                 User userNhan = usersPlayGame.get(1);
                 ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
-                Game game = serverDao.insertGame(); 
-                for(int i= 0;i<users.size();i++){
-                    if(userNhan.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                        Socket cliSocket = DataServer.mapSocket.get(users.get(i));
-                        ObjectOutputStream oos1;                                             
-                        try {
-                            oos1 = new ObjectOutputStream(cliSocket.getOutputStream());                           
-                            oos1.writeObject(new Message(game,Message.MesType.START_GAME));                          
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }                       
-                    }
-                    else if(userMoi.getAccount().getUsername().equals(users.get(i).getAccount().getUsername())){
-                        Socket cliSocket = DataServer.mapSocket.get(users.get(i));
-                        ObjectOutputStream oos2;                                             
-                        try {
-                            oos2 = new ObjectOutputStream(cliSocket.getOutputStream());                           
-                            oos2.writeObject(new Message(game,Message.MesType.START_GAME));                          
-                        } catch (IOException ex) {
-                            Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
-                        }                       
+                for (int i = 0; i < users.size(); i++) {
+                    System.out.println(users.get(i));
+                    if (userMoi.getId() == users.get(i).getId()) {
+                        DataServer.sendMessage(users.get(i), new Message(users, Message.MesType.DO_NOT_PLAY));
                     }
                 }
                 break;
             }
-            
-            
-            default: break;
-        }
-    }
-    
-    class inviteThread extends Thread{
+            case SEND_CHOICE: {
+                Choice choice = (Choice) mesReceive.getObject();
+                System.out.println("choice" + choice.getUser().getId());
+                Game game = choice.getGame();
+                serverDao.insertChoice(choice);
+                ArrayList<Choice> listChoice = serverDao.getChoiceByIdGame(game.getId());
+                Choice choice1 = new Choice();
+                Choice choice2 = new Choice();
+                if (listChoice.size() == 2) {
+                    choice1 = listChoice.get(0);
+                    choice2 = listChoice.get(1);
+                    if (choice1.compareTo(choice2) > 0) {
+                        choice1.setResult(2);
+                        choice2.setResult(0);
+                    } else if (choice1.compareTo(choice2) == 0) {
+                        choice1.setResult(1);
+                        choice2.setResult(1);
+                    } else {
+                        choice1.setResult(0);
+                        choice2.setResult(2);
+                    }
+                    choice1.getUser().setStatus(1);
+                    choice2.getUser().setStatus(1);
+                    serverDao.updateUserStatus(choice1.getUser());
+                    serverDao.updateUserPoint(choice1);
+                    serverDao.updateUserPoint(choice2);
+                    ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                    ArrayList<User> us = serverDao.getUsers();
+                    for (int i = 0; i < users.size(); i++) {
+                        if (users.get(i).getId() == choice1.getUser().getId()) {
+                            DataServer.sendMessage(users.get(i), new Message(choice1, us, Message.MesType.REPLY_RESULT));
+                        }
+                        if (users.get(i).getId() == choice2.getUser().getId()) {
+                            DataServer.sendMessage(users.get(i), new Message(choice2, us, Message.MesType.REPLY_RESULT));
 
-        @Override
-        public void run() {
-            
+                        }
+                    }
+                }
+                break;
+            }
+            case CHANGE_USER_STATUS: {
+                User u = (User) mesReceive.getObject();
+                serverDao.updateUserStatus(u);
+                System.out.println(u.toString());
+                ArrayList<User> users = new ArrayList<User>(DataServer.mapSocket.keySet());
+                ArrayList<User> us = serverDao.getUsers();
+                for (int i = 0; i < users.size(); i++) {
+                    DataServer.sendMessage(users.get(i), new Message(us, Message.MesType.LIST_FULL));
+                }
+                break;
+            }
+            default:
+                break;
         }
-        
-    }
-    
-    private Message createMessage() {
-        Message mes = new Message();
-        return mes;
     }
 
 }

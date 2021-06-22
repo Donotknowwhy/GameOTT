@@ -16,13 +16,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import model.Game;
+import model.Choice;
 import model.Message;
 import model.User;
-import ui.GameFrm;
-import ui.InviteRequest;
-import ui.LoginFrm;
 import utils.Usage;
 
 /**
@@ -31,13 +27,18 @@ import utils.Usage;
  */
 public class ClientControl {
 
-    private Socket clientSocket;
+    private LoginControl loginControl;
+    private RegisterControl registerControl;
+    private InviteControl inviteControl;
+    private InviteRequestControl inviteRequestControl;
+    private GameControl gameControl;
+    private Socket clientSocket = new Socket();
     private String serverHost;
     private int serverPort;
     ObjectInputStream ois;
     ObjectOutputStream oos;
+    ObjectInputStream ois1;
     private static ClientControl instance = null;
-    
 
     public static ClientControl getInstance() {
         if (instance == null) {
@@ -47,22 +48,105 @@ public class ClientControl {
     }
 
     public ClientControl() {
+        this.threadReceive = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        Object o = ois.readObject();
+                        Message message = (Message) o;
+                        switch (message.getMesType()) {
+                            case LOGIN_FAIL: {
+                                loginControl.showMessageFail();
+                                break;
+                            }
+                            case LOGIN_SUCCESS: {
+                                loginControl.showMessageSuccess(message);
+                                User userCurrent = (User) message.getObject();
+                                DataClient.setUserCurrent(userCurrent);
+                                break;
+                            }
+                            case REGISTER_FAIL: {
+                                registerControl.showMessageFail();
+                                break;
+                            }
+                            case REGISTER_SUCCESS: {
+                                registerControl.showMessageSuccess();
+                                User userCurrent = (User) message.getObject();
+                                DataClient.setUserCurrent(userCurrent);
+                                break;
+                            }
+                            case LIST_FULL: {
+                                inviteControl.showListUser((ArrayList<User>) message.getObject());
+                                break;
+                            }
+                            case INVITE_USER: {
+                                inviteControl.showInviteRequest(message);
+                                break;
+                            }
+                            case DO_NOT_PLAY:{
+                                inviteControl.showMessageRejectGame();
+                                break;
+                            }
+                            case START_GAME:{
+                                inviteControl.showGameConsole(message);
+                                break;
+                            }
+                            case REPLY_RESULT:{
+                                Choice choice = (Choice) message.getObject();
+                                ArrayList<User> listUs = (ArrayList<User>) message.getObject2();
+                                inviteControl.showListUser(listUs);
+                                gameControl.checkResult(choice);
+                                break;
+                            }
+                        }
+                        Thread.sleep(500);
+                    }
+                } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+                    Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
-    public ObjectInputStream getOis() {
-        return ois;
+    public LoginControl getLoginControl() {
+        return loginControl;
     }
 
-    public ObjectOutputStream getOos() {
-        return oos;
+    public void setLoginControl(LoginControl loginControl) {
+        this.loginControl = loginControl;
     }
 
-    public Socket getClientSocket() {
-        return clientSocket;
+    public RegisterControl getRegisterControl() {
+        return registerControl;
     }
 
-    public void setClientSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
+    public void setRegisterControl(RegisterControl registerControl) {
+        this.registerControl = registerControl;
+    }
+
+    public InviteControl getInviteControl() {
+        return inviteControl;
+    }
+
+    public void setInviteControl(InviteControl inviteControl) {
+        this.inviteControl = inviteControl;
+    }
+
+    public InviteRequestControl getInviteRequestControl() {
+        return inviteRequestControl;
+    }
+
+    public void setInviteRequestControl(InviteRequestControl inviteRequestControl) {
+        this.inviteRequestControl = inviteRequestControl;
+    }
+
+    public GameControl getGameControl() {
+        return gameControl;
+    }
+
+    public void setGameControl(GameControl gameControl) {
+        this.gameControl = gameControl;
     }
     
 
@@ -71,101 +155,26 @@ public class ClientControl {
         System.out.println("open connection");
         serverPort = Usage.port;
         try {
-
             clientSocket = new Socket(serverHost, serverPort);
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
-            System.out.println(ois);
-            return clientSocket;
-        } catch (IOException ex) {
-            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return null;
     }
 
     public void sendData(Message mesSend) {
-//        CheckMess checkMess = new CheckMess(clientSocket, ois);
-//        checkMess.start();
         try {
+            
             oos.writeObject(mesSend);
         } catch (IOException ex) {
             Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    Thread threadReceive;
 
-    public Message receiveData() {
-        try {
-            Object o = ois.readObject();
-            if (o instanceof Message) {
-                Message mesReceive = (Message) o;
-                return mesReceive;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientControl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+  public void startThreadRecei() {
+        threadReceive.start();
     }
-}
-
-
-class CheckMess extends Thread {
-
-    Message mesRecei;
-    private Socket socketNhanInvite;
-    ObjectInputStream ois;
-    ClientControl clientControl;
-    public CheckMess(Socket socketNhanInvite, ClientControl clientControl) {
-        this.socketNhanInvite = socketNhanInvite;
-        try {
-            this.ois = new ObjectInputStream(socketNhanInvite.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.clientControl = clientControl;
-        System.out.println(this.ois);
-    }
-
-    public Message getMesRecei() {
-        return mesRecei;
-    }
-
-    public void setMesRecei(Message mesRecei) {
-        this.mesRecei = mesRecei;
-    }
-
-    @Override
-    public void run() {
-        Message message;
-
-        while (true) {
-            try {
-                Object o = ois.readObject();
-                if (o instanceof Message) {
-                    message = (Message) o;
-                    setMesRecei(message);
-                    if (message.getMesType() == Message.MesType.INVITE_USER) {
-                        InviteRequest inviteRequest = new InviteRequest();
-                        ArrayList<User> users = (ArrayList<User>) message.getObject();
-                        InviteRequestControl irc = new InviteRequestControl(inviteRequest, clientControl, users);
-                        inviteRequest.setVisible(true);
-                    } else if(message.getMesType() == Message.MesType.START_GAME) {
-                        GameFrm gameFrm = new GameFrm();
-                        Game game = (Game) message.getObject();
-                        GameControl gameControl = new GameControl(gameFrm,clientControl,game);
-                        gameFrm.setVisible(true);
-                    }
-                }
-                Thread.sleep(1000);
-            } catch (IOException ex) {
-                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(CheckMess.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
 }

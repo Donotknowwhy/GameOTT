@@ -24,6 +24,10 @@ public class Game implements Serializable{
     public Game() {
     }
 
+    public Game(int id) {
+        this.id = id;
+    }
+    
     
     
     public Game(int id, Date timeCreated) {

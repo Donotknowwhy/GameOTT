@@ -14,16 +14,16 @@ import ui.InviteRequest;
 
 /**
  *
- * @author lamit
+ * @author ASUS 
  */
 public class InviteRequestControl {
-    private InviteRequest inviteRequest;
     private ClientControl clientControl;
+    private InviteRequest inviteRequest;
     private ArrayList<User> users;
-
     public InviteRequestControl(InviteRequest inviteRequest, ClientControl clientControl, ArrayList<User> users) {
         this.inviteRequest = inviteRequest;
         this.clientControl = clientControl;
+        this.clientControl.setInviteRequestControl(this);
         this.inviteRequest.setAction(new ButtonAccept(), new ButtonReject());
         this.users = users;
     }
@@ -31,6 +31,7 @@ public class InviteRequestControl {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            inviteRequest._dispose();
             Message messages = new Message(users, Message.MesType.ACCEPT_REQUEST);
             clientControl.sendData(messages);
         }
@@ -40,9 +41,11 @@ public class InviteRequestControl {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            inviteRequest._dispose();
             Message messages = new Message(users, Message.MesType.DENY_REQUEST);
             clientControl.sendData(messages);
         }
         
     }
+    
 }

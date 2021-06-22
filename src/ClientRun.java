@@ -18,12 +18,14 @@ import ui.RegisterFrm;
 public class ClientRun {
     public static void main(String[] args) {
         LoginFrm loginFrm = new LoginFrm();
-//        RegisterFrm registerFrm = new RegisterFrm();
+        loginFrm.setVisible(true);
         ClientControl clientControl = new ClientControl();
+        System.out.println(System.currentTimeMillis());
         clientControl.openConnection();
+        System.out.println(System.currentTimeMillis());
+        clientControl.startThreadRecei();
         LoginControl loginControl
                  = new LoginControl(loginFrm,clientControl);
-//        RegisterControl registerControl = new RegisterControl(registerFrm, clientControl);
         
     }
 }

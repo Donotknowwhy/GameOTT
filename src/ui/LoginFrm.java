@@ -5,12 +5,8 @@
  */
 package ui;
 
-import client.ClientControl;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
-import model.Account;
-import model.Message;
 
 /**
  *
@@ -22,6 +18,7 @@ public class LoginFrm extends javax.swing.JFrame {
      */
     public LoginFrm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public void setAction(ActionListener al,ActionListener al1){
         btnLogin.addActionListener(al);
@@ -45,6 +42,7 @@ public class LoginFrm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnLogin.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,10 +50,13 @@ public class LoginFrm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("username");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("Username");
 
-        jLabel2.setText("password");
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setText("Password");
 
+        btnRegister.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnRegister.setText("Register");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -86,7 +87,7 @@ public class LoginFrm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))

@@ -6,6 +6,7 @@
 package ui;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JOptionPane;
@@ -27,37 +28,23 @@ public class ListFrm extends javax.swing.JFrame {
      */
     public ListFrm() {
         initComponents();
-//        model = (DefaultTableModel) tableList.getModel();
+        this.setLocationRelativeTo(null);
     }
-
+    public void setActionM(ActionListener al1,ActionListener al){
+        btnLogout.addActionListener(al1);
+        btnInvite.addActionListener(al);
+    }
+    public void _dispose(){
+        this.dispose();
+    }
     public void addRow(ArrayList<User> listUser) {
 
     }
-
-//        private void showUsersLowToHigh(ArrayList<User> users){
-//        DefaultTableModel dtm = (DefaultTableModel)tableList.getModel();
-//        dtm.getDataVector().removeAllElements();
-//        
-//        Collections.sort(users);        
-//        users.forEach(u -> {
-//            dtm.addRow(u.toObjects());
-//        });
-//    }
-//    
-//    private void showUserHighToLow(){
-//        DefaultTableModel dtm = (DefaultTableModel)tableList.getModel();
-//        dtm.getDataVector().removeAllElements();
-//        
-//        Collections.sort(users);   
-//        Collections.reverse(users);
-//        users.forEach(u -> {
-//            dtm.addRow(u.toObjects());
-//        });
-//    }
     public void showUsers(ArrayList<User> users) {
         DefaultTableModel dtm = (DefaultTableModel) tableList.getModel();
         dtm.getDataVector().removeAllElements();
         users.forEach(u -> {
+            System.out.println(u.toString());
             dtm.addRow(u.toObjects());
         });
     }
@@ -67,21 +54,12 @@ public class ListFrm extends javax.swing.JFrame {
         System.out.println("---"+users.size());
         if (indexRow >= 0) {
             user = users.get(indexRow);
-            System.out.println(users.get(indexRow).toString());
-//            int rank = user.getRank();
-//            Account acc = user.getAccount();
-//            int point = user.getPoint();           
-//            boolean status = user.isStatus();
         }
-//        System.out.println(user.toObjects());
         return user;
     }
 
-    public void setAction(ActionListener al) {
-        btnInvite.addActionListener(al);
-    }
 
-    public void thongBao(String f) {
+    public void showMessage(String f) {
         JOptionPane.showMessageDialog(this, f);
     }
 
@@ -99,9 +77,11 @@ public class ListFrm extends javax.swing.JFrame {
         tableList = new javax.swing.JTable();
         btnInvite = new javax.swing.JButton();
         back = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setText("GAME OAN TU TI");
 
         tableList.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,6 +102,7 @@ public class ListFrm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableList);
 
+        btnInvite.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnInvite.setText("Invite");
         btnInvite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +110,7 @@ public class ListFrm extends javax.swing.JFrame {
             }
         });
 
+        back.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         back.setText("Back");
         back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,38 +118,45 @@ public class ListFrm extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnLogout.setText("Log out");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(399, 399, 399)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 853, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(32, 32, 32)
                 .addComponent(back)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(597, 597, 597)
                 .addComponent(btnInvite)
-                .addGap(123, 123, 123))
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addComponent(btnLogout)
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInvite)
-                    .addComponent(back))
-                .addGap(66, 66, 66))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogout))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(back)
+                    .addComponent(btnInvite))
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -180,7 +169,7 @@ public class ListFrm extends javax.swing.JFrame {
 
     private void btnInviteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInviteActionPerformed
         // TODO add your handling code here:
-        new GameFrm().setVisible(true);
+//        new GameFrm().setVisible(true);
     }//GEN-LAST:event_btnInviteActionPerformed
 
     private void tableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableListMouseClicked
@@ -233,6 +222,7 @@ public class ListFrm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
     private javax.swing.JButton btnInvite;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableList;
